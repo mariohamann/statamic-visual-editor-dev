@@ -2,8 +2,8 @@
 id: home
 blueprint: page
 title: Home
-updated_by: a99e8a21-e22f-4cce-952c-fa814934906a
-updated_at: 1766320586
+updated_by: 176983e4-cc88-47c9-a6c4-a9a0c75260af
+updated_at: 1773353908
 seo_noindex: false
 seo_nofollow: false
 seo_canonical_type: entry
@@ -41,6 +41,7 @@ page_builder:
             text: 'Get climbing!'
     type: article
     enabled: true
+    _visual_id: c637b0b2-8208-460c-9a3a-cffdf8376c8c
   -
     id: eFlcYHyl
     heading: Features
@@ -68,6 +69,7 @@ page_builder:
             button_type: inline
             type: button
             enabled: true
+        _visual_id: c8b48fcb-69e8-4365-8c28-377a849f422f
       -
         id: lly5mxh7
         heading: 'Long form content'
@@ -89,6 +91,7 @@ page_builder:
             button_type: inline
             type: button
             enabled: true
+        _visual_id: bae8cbc6-4a57-4c41-95bd-1ea81fc5ddfc
       -
         id: lly5nvk4
         heading: 'Way more features'
@@ -110,4 +113,27 @@ page_builder:
             button_type: inline
             type: button
             enabled: true
+        _visual_id: 9c2493a0-f8ab-412c-85af-5b6905bceb4a
+    _visual_id: b0ba1160-7f71-4eb7-b60b-f46076d70b5d
+  -
+    id: uzsikCkeHuPe0lwIbKkOv
+    article:
+      -
+        type: paragraph
+        content:
+          -
+            type: text
+            text: dasdasd
+      -
+        type: set
+        attrs:
+          id: fOpO79t2ItJ-4Hg27KOOY
+          values:
+            type: pull_quote
+            size: md
+            quote: 'Hello everyone!'
+            _visual_id: 7ecc7f15-7f3a-49f5-83c2-880cda2e2ceb
+    type: article
+    enabled: true
+    _visual_id: 941e2737-6b15-46f2-b3f6-f179a6294211
 ---

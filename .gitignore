@@ -20,3 +20,4 @@ yarn-error.log
 
 /public/_build/
 /storage/forms
+/public/vendor/statamic-visual-editor/build/

@@ -2,8 +2,8 @@
 id: 20f6a148-63b8-47a8-9b0e-d57095d78c21
 blueprint: page
 title: 'Long form content'
-updated_by: f9af1bbb-3f1a-4ce3-8f7e-eb66cbb69a9a
-updated_at: 1674898078
+updated_by: 176983e4-cc88-47c9-a6c4-a9a0c75260af
+updated_at: 1773354074
 seo_noindex: false
 seo_nofollow: false
 seo_canonical_type: entry
@@ -50,6 +50,7 @@ page_builder:
             size: lg
             quote: 'Maecenas imperdiet mauris non posuere dignissim. Duis tempus molestie efficitur.'
             author: 'Studio 1902'
+            _visual_id: cefeaf47-380f-4ec7-b8e6-2dfab00e8053
       -
         type: paragraph
         content:
@@ -110,6 +111,7 @@ page_builder:
             size: xl
             caption: 'Get to the top of the Peak.'
             image: a-peak.jpg
+            _visual_id: 6bc1ebb5-e392-45ec-a8dd-e4dcf761e338
       -
         type: paragraph
         content:
@@ -206,6 +208,7 @@ page_builder:
                   - 'Torquent metus dis finibus odio fringilla facilisis euismod litora mauris eget sodales quis risus convallis penatibus condimentum volutpat integer laoreet'
                   - 'EtiamEx cras porttitor etiam bibendum ad facilisi est quam dolor sollicitudin commodo rutrum fames platea egestas sit erat blandit vehicula'
             caption: 'Add tables with a caption.'
+            _visual_id: 7d3caaa8-6c1f-4c46-97e4-917718cae2fe
       -
         type: paragraph
         content:
@@ -221,6 +224,7 @@ page_builder:
             video_url: 'https://vimeo.com/53018096'
             size: xl
             caption: 'A video about some mountain peaks.'
+            _visual_id: 52e46cbc-cc5d-4453-8e04-b0a129dcc0d8
       -
         type: paragraph
         content:
@@ -242,6 +246,8 @@ page_builder:
                 url: 'https://www.youtube.com/watch?v=o-YBDTqX_ZU'
                 button_type: button
                 type: button
+                enabled: true
+                _visual_id: 63ef16ec-4652-48b5-90b3-7042c70eaf25
               -
                 id: kuVHCd6j
                 label: 'Dolor sit amet'
@@ -250,6 +256,16 @@ page_builder:
                 entry: home
                 button_type: button
                 type: button
+                enabled: true
+                _visual_id: 9268eaa9-16ca-4ada-b341-10937ac3113c
+            _visual_id: 2ea52104-031d-4b6d-ac9b-e833ed339744
     type: article
     enabled: true
+    _visual_id: 4daf1d6b-11fb-4528-917f-6ce7a8022f0c
+  -
+    id: jAnTEDJT5JvHdB4QXs3Ux
+    form: contact
+    type: form
+    enabled: true
+    _visual_id: 878e266e-309e-4aef-88a3-c7aa2fd3fd32
 ---
