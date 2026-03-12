@@ -1,0 +1,84 @@
+title: Article
+fields:
+  -
+    handle: article
+    field:
+      buttons:
+        - h1
+        - h2
+        - h3
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - quote
+        - removeformat
+        - anchor
+      reading_time: true
+      allow_source: true
+      type: bard
+      localizable: true
+      display: Article
+      replicator_preview: false
+      validate:
+        - required
+      container: files
+      always_save: false
+      remove_empty_nodes: true
+      smart_typography: true
+      sets:
+        interactive:
+          display: Interactive
+          instructions: 'Interactive sets.'
+          icon: programming-script-code
+          sets:
+            buttons:
+              display: Buttons
+              instructions: 'Add one or multiple buttons.'
+              icon: link
+              image: buttons.jpeg
+              fields:
+                -
+                  import: buttons
+        text:
+          display: Text
+          instructions: 'Text based sets.'
+          icon: text-formatting-initial-letter
+          sets:
+            pull_quote:
+              display: 'Pull quote'
+              instructions: 'Add a pull quote with an optional author.'
+              icon: text-formatting-quotation
+              image: pull-quote.jpeg
+              fields:
+                -
+                  import: pull_quote
+            table:
+              display: Table
+              instructions: 'Add a data table with headers, rows and columns.'
+              icon: add-table
+              image: table.jpeg
+              fields:
+                -
+                  import: table
+        image_video:
+          display: 'Image and video'
+          instructions: "Sets with images or embeddable video's."
+          icon: media-image-camera
+          sets:
+            image:
+              display: Image
+              instructions: 'Add a single image with an optional caption.'
+              icon: hero-image-above-text
+              image: image.jpeg
+              fields:
+                -
+                  import: image
+            video:
+              display: Video
+              instructions: 'Add a YouTube or Vimeo video with an optional caption.'
+              icon: movie-video-clip
+              image: video.jpeg
+              fields:
+                -
+                  import: video

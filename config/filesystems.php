@@ -1,0 +1,119 @@
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Filesystem Disk
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the default filesystem disk that should be used
+    | by the framework. The "local" disk, as well as a variety of cloud
+    | based disks are available to your application for file storage.
+    |
+    */
+
+    'default' => env('FILESYSTEM_DISK', 'local'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Filesystem Disks
+    |--------------------------------------------------------------------------
+    |
+    | Below you may configure as many filesystem disks as necessary, and you
+    | may even configure multiple disks for the same driver. Examples for
+    | most supported storage drivers are configured here for reference.
+    |
+    | Supported Drivers: "local", "ftp", "sftp", "s3"
+    |
+    */
+
+    'disks' => [
+        'local' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private'),
+            'serve' => true,
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'public' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'assets' => [
+            'driver' => 'local',
+            'root' => public_path('assets'),
+            'url' => '/assets',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'images' => [
+            'driver' => 'local',
+            'root' => public_path('images'),
+            'url' => '/images',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'favicons' => [
+            'driver' => 'local',
+            'root' => public_path('favicons'),
+            'url' => '/favicons',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'files' => [
+            'driver' => 'local',
+            'root' => public_path('files'),
+            'url' => '/files',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'page_builder' => [
+            'driver' => 'local',
+            'root' => public_path('page_builder'),
+            'url' => '/page_builder',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'social_images' => [
+            'driver' => 'local',
+            'root' => public_path('social_images'),
+            'url' => '/social_images',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Symbolic Links
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the symbolic links that will be created when the
+    | `storage:link` Artisan command is executed. The array keys should be
+    | the locations of the links and the values should be their targets.
+    |
+    */
+
+    'links' => [
+        public_path('storage') => storage_path('app/public'),
+    ],
+
+];

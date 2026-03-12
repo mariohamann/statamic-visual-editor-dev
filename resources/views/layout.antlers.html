@@ -1,0 +1,29 @@
+{{#
+    @name Layout
+    @desc The default layout file.
+#}}
+
+<!-- /layout.antlers.html -->
+<!doctype html>
+<html lang="{{ site:short_locale }}" class="antialiased scroll-smooth scroll-pt-4">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        {{ vite src="resources/css/site.css|resources/js/site.js" directory="_build" }}
+        {{ partial:statamic-peak-seo::snippets/seo }}
+        {{ partial:statamic-peak-tools::snippets/browser_appearance }}
+        {{ stack:head }}
+    </head>
+    <body class="flex flex-col min-h-screen bg-white">
+        {{ stack:seo_body }}
+        {{ partial:statamic-peak-tools::snippets/noscript }}
+        {{ partial:statamic-peak-tools::navigation/skip_links }}
+        {{ partial:statamic-peak-tools::components/toolbar }}
+
+        {{ partial:layout/header }}
+        {{ template_content }}
+        {{ partial:layout/footer }}
+    </body>
+</html>
+<!-- End: /layout.antlers.html -->

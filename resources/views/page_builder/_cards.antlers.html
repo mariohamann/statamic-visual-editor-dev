@@ -1,0 +1,52 @@
+{{#
+    @name Cards
+    @desc The Cards page builder block.
+    @set page.page_builder.cards
+#}}
+
+<!-- /page_builder/_cards.antlers.html -->
+{{ partial:page_builder/block class="gap-y-8" }}
+    {{ if block:heading }}
+        <header class="span-content grid md:grid-cols-12 gap-fluid-grid-gap">
+            {{ partial:typography/h2 :content="block:heading" class="md:col-start-3 md:col-span-8 text-center" }}
+        </header>
+    {{ /if }}
+
+    <ul class="span-content grid md:grid-cols-12 gap-fluid-grid-gap">
+        {{ block:cards }}
+            <li
+                class="
+                    flex flex-col stack-4 justify-between items-start p-6 border border-neutral/10 shadow-lg rounded
+                    {{ switch(
+                        (total_results === 1) => 'md:col-span-8 md:col-start-3',
+                        (total_results === 2) => 'md:col-span-6',
+                        (total_results > 2) => 'md:col-span-8 md:col-start-3 lg:col-span-4 lg:col-start-0',
+                        () => void
+                    )}}
+                "
+            >
+                <div class="stack-2">
+                    {{ if button }}
+                        {{ button }}
+                            <a class="group " {{ partial:statamic-peak-tools::snippets/button_attributes }} aria-hidden="true" tabindex="-1">
+                                {{ partial:typography/h3 color="group-hover:underline" :content="heading" }}
+                            </a>
+                        {{ /button }}
+                        {{ partial:typography/h3 class="sr-only" :content="heading" }}
+                    {{ else }}
+                        {{ partial:typography/h3 :content="heading" }}
+                    {{ /if }}
+
+                    {{ if text }}
+                        {{ partial:typography/p :content="text" }}
+                    {{ /if }}
+                </div>
+
+                {{ button }}
+                    {{ partial:components/button }}
+                {{ /button }}
+            </li>
+        {{ /block:cards }}
+    </ul>
+{{ /partial:page_builder/block }}
+<!-- End: /page_builder/_cards.antlers.html -->

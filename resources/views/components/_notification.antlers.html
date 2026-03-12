@@ -1,0 +1,61 @@
+{{#
+    @name Notification
+    @desc The notification component. Currently used in `resources/views/page_builder/_form.antlers.html`.
+    @param* type The type of notification: `success`, `notice`, or `error`.
+    @param content The notification content.
+    @param class Add custom CSS classes.
+#}}
+
+<!-- /components/_notification.antlers.html -->
+<div
+    class="
+        rounded border p-4
+        {{ switch(
+            (type == 'success') => 'bg-green-50 border-green-700',
+            (type == 'notice') => 'bg-yellow-50 border-yellow-700',
+            (type == 'error') => 'bg-red-50 border-red-700',
+            () => 'bg-gray-50 border-gray-700'
+        )}}
+        {{ class }}
+    "
+    {{ slot:attributes }}
+>
+    <div class="flex">
+        <div class="shrink-0">
+            {{ svg
+                :src="type"
+                attr:alt=""
+                attr:aria-hidden="true"
+                attr:class="
+                    h-5 w-5 fill-current motion-safe:transition-colors
+                    { switch(
+                        (type == 'success') => 'text-green-700',
+                        (type == 'notice') => 'text-yellow-700',
+                        (type == 'error') => 'text-red-700',
+                        () => 'text-gray-700'
+                    )}
+                "
+            }}
+        </div>
+        <div class="ml-3">
+            {{ if content }}
+                <h3
+                    class="
+                        text-sm leading-5 font-bold
+                        {{ switch(
+                            (type == 'success') => 'text-green-800',
+                            (type == 'notice') => 'text-yellow-800',
+                            (type == 'error') => 'text-red-800',
+                            () => 'text-gray-800'
+                        )}}
+                    "
+                >
+                    {{ content }}
+                </h3>
+            {{ /if }}
+
+            {{ slot }}
+        </div>
+    </div>
+</div>
+<!-- End: /components/_notification.antlers.html -->

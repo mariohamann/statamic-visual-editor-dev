@@ -1,0 +1,45 @@
+title: Cards
+fields:
+  -
+    handle: heading
+    field:
+      type: text
+      localizable: true
+      display: Heading
+  -
+    handle: cards
+    field:
+      reorderable: true
+      type: replicator
+      localizable: true
+      display: Cards
+      replicator_preview: false
+      collapse: accordion
+      hide_display: true
+      button_label: 'Add card'
+      sets:
+        cards:
+          display: Cards
+          sets:
+            card:
+              display: Card
+              image: null
+              fields:
+                -
+                  handle: heading
+                  field:
+                    type: text
+                    localizable: true
+                    validate: required
+                    display: Heading
+                -
+                  handle: text
+                  field: common.text_plain
+                  config:
+                    display: Text
+                -
+                  handle: button
+                  field: buttons.buttons
+                  config:
+                    display: Button
+                    max_sets: 1

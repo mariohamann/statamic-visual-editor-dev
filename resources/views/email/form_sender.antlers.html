@@ -1,0 +1,9 @@
+{{#
+    @name Form sender HTML
+    @desc This is the HTML email template that goes to the sender of the form when it has been submitted.
+#}}
+
+{{ partial:email/form
+    :text="form_config:content_sender:email_text"
+    :show_submitted="form_config:content_sender:show_submitted_data"
+/}}

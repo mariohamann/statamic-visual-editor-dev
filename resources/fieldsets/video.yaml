@@ -1,0 +1,28 @@
+title: Video
+fields:
+  -
+    handle: size
+    field: common.size
+    config:
+      localizable: true
+      width: 100
+  -
+    handle: video_url
+    field:
+      type: video
+      display: Video
+      icon: video
+      instructions: 'YouTube or Vimeo URL.'
+      listable: hidden
+      instructions_position: below
+      visibility: visible
+      replicator_preview: true
+      hide_display: false
+  -
+    handle: caption
+    field:
+      input_type: text
+      type: text
+      localizable: true
+      listable: hidden
+      display: Caption

@@ -1,0 +1,141 @@
+tabs:
+  general:
+    display: General
+    sections:
+      -
+        display: 'System pages'
+        instructions: 'Configure system pages.'
+        fields:
+          -
+            handle: error_404_entry
+            field: common.entry
+            config:
+              display: '404'
+              width: 50
+              instructions: 'Show all content of page whenever an URL does not exist.'
+              collections:
+                - pages
+              validate:
+                - required
+      -
+        display: Copyright
+        instructions: 'Copyright configuration options.'
+        fields:
+          -
+            handle: copyright_name
+            field:
+              input_type: text
+              antlers: false
+              display: 'Copyright name'
+              type: text
+              icon: text
+              instructions: 'Falls back to the application name.'
+              width: 50
+              listable: hidden
+              instructions_position: above
+          -
+            handle: copyright_since
+            field:
+              placeholder: '2020'
+              input_type: number
+              character_limit: 4
+              prepend: ©
+              antlers: false
+              default: '2020'
+              display: 'Copyright since'
+              instructions: 'The website will add ` - current_year ` if they differ.'
+              type: text
+              icon: text
+              width: 50
+              listable: hidden
+              instructions_position: above
+              validate:
+                - required
+      -
+        display: 'Privacy statement'
+        instructions: 'Configure an optional privacy statement.'
+        fields:
+          -
+            handle: privacy_statement_type
+            field:
+              options:
+                none: None
+                entry: Entry
+                pdf: PDF
+              default: none
+              type: button_group
+              instructions: 'Form consent fields will link to this Privacy Policy.'
+              instructions_position: below
+              listable: false
+              localizable: true
+              display: 'Privacy statement'
+              width: 50
+          -
+            handle: privacy_statement_asset
+            field: common.image
+            config:
+              container: files
+              localizable: true
+              listable: hidden
+              display: 'Privacy statement (PDF)'
+              width: 50
+              if:
+                privacy_statement_type: 'equals pdf'
+              validate:
+                - 'required_if:privacy_statement_type,pdf'
+          -
+            handle: privacy_statement_entry
+            field: common.entry
+            config:
+              localizable: true
+              listable: hidden
+              display: 'Privacy statement (entry)'
+              width: 50
+              if:
+                privacy_statement_type: 'equals entry'
+              validate:
+                - 'required_if:privacy_statement_type,entry'
+      -
+        display: 'Cookie notice'
+        instructions: 'Configure an optional cookie notice.'
+        fields:
+          -
+            handle: cookie_notice_type
+            field:
+              options:
+                none: None
+                entry: Entry
+                pdf: PDF
+              default: none
+              type: button_group
+              instructions: 'The Cookie Banner will link to this Cookie Notice.'
+              instructions_position: below
+              listable: false
+              localizable: true
+              display: 'Cookie notice'
+              width: 50
+          -
+            handle: cookie_notice_asset
+            field: common.image
+            config:
+              container: files
+              localizable: true
+              listable: hidden
+              display: 'Cookie notice (PDF)'
+              width: 50
+              if:
+                cookie_notice_type: 'equals pdf'
+              validate:
+                - 'required_if:cookie_notice_type,pdf'
+          -
+            handle: cookie_notice_entry
+            field: common.entry
+            config:
+              localizable: true
+              listable: hidden
+              display: 'Cookie notice (entry)'
+              width: 50
+              if:
+                cookie_notice_type: 'equals entry'
+              validate:
+                - 'required_if:cookie_notice_type,entry'

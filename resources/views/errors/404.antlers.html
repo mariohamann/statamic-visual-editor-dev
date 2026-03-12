@@ -1,0 +1,13 @@
+{{#
+    @name Error: 404
+    @desc The 404 error template.
+#}}
+
+{{# Redirect if current_url is in the Redirects global. #}}
+{{ partial:statamic-peak-seo::errors/redirects }}
+
+<!-- /errors/404.antlers.html -->
+<main class="page-builder" id="content">
+    {{ partial:statamic-peak-seo::errors/entry_content }}
+</main>
+<!-- End: /errors/404.antlers.html -->

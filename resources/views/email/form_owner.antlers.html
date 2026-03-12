@@ -1,0 +1,9 @@
+{{#
+    @name Form owner HTML
+    @desc This is the HTML email template that goes to the owner of the form when it has been submitted.
+#}}
+
+{{ partial:email/form
+    :text="form_config:content_owner:email_text"
+    :show_submitted="form_config:content_owner:show_submitted_data"
+/}}

@@ -1,0 +1,80 @@
+title: 'Common reusable fields'
+fields:
+  -
+    handle: image
+    field:
+      container: images
+      max_files: 1
+      type: assets
+      localizable: true
+      display: Image
+      always_save: false
+  -
+    handle: entry
+    field:
+      max_items: 1
+      type: entries
+      localizable: true
+      listable: false
+      display: Entry
+  -
+    handle: text_rich
+    field:
+      buttons:
+        - h2
+        - h3
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - anchor
+      link_noopener: true
+      container: files
+      fullscreen: false
+      allow_source: true
+      type: bard
+      replicator_preview: false
+      localizable: true
+      display: 'Text rich'
+      always_save: false
+      remove_empty_nodes: true
+      smart_typography: true
+  -
+    handle: text_basic
+    field:
+      buttons:
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - anchor
+      link_noopener: true
+      container: files
+      fullscreen: false
+      allow_source: true
+      type: bard
+      replicator_preview: false
+      localizable: true
+      display: 'Text basic'
+      always_save: false
+      remove_empty_nodes: true
+      smart_typography: true
+  -
+    handle: text_plain
+    field:
+      type: textarea
+      localizable: true
+      display: 'Text plain'
+  -
+    handle: size
+    field:
+      options:
+        md: Normal
+        lg: LG
+        xl: XL
+      type: button_group
+      localizable: true
+      default: md
+      display: Size

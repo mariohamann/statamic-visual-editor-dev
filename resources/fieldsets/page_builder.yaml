@@ -1,0 +1,47 @@
+title: 'Page builder'
+fields:
+  -
+    handle: page_builder
+    field:
+      type: replicator
+      localizable: true
+      hide_display: true
+      collapse: true
+      listable: false
+      display: 'Page builder'
+      button_label: 'Add block'
+      sets:
+        image_and_text:
+          display: 'Image and text'
+          instructions: 'Image and text based blocks.'
+          icon: hero-image-above-text
+          sets:
+            article:
+              display: Article
+              instructions: 'Long form content, can be expanded with media like figures, video, quotes or tables.'
+              icon: text-formatting-image-bottom
+              image: article.jpeg
+              fields:
+                -
+                  import: article
+        interactive:
+          display: Interactive
+          instructions: 'Interactive blocks.'
+          icon: programming-script-code
+          sets:
+            form:
+              display: Form
+              instructions: 'Select and render a form.'
+              icon: mail-chat-bubble-text
+              image: form.jpeg
+              fields:
+                -
+                  import: form
+            cards:
+              display: Cards
+              instructions: 'Show linkable cards with text.'
+              icon: link
+              image: cards.jpeg
+              fields:
+                -
+                  import: cards
