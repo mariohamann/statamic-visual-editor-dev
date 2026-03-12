@@ -13,6 +13,7 @@
         "php": "^8.3",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
+        "mariohamann/statamic-visual-editor": "@dev",
         "statamic/cms": "^6.0",
         "studio1902/statamic-peak-seo": "^10.0",
         "studio1902/statamic-peak-tools": "^9.0"
@@ -96,5 +97,11 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "addons/mariohamann/statamic-visual-editor"
+        }
+    ]
 }

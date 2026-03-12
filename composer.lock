@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93e0da6d1a713feaaf7cc0ad94bb1934",
+    "content-hash": "7b562a72b5b44faa72f48e4bbc2d3a4d",
     "packages": [
         {
             "name": "ajthinking/archetype",
@@ -2889,6 +2889,46 @@
                 }
             ],
             "time": "2025-12-10T09:58:31+00:00"
+        },
+        {
+            "name": "mariohamann/statamic-visual-editor",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "addons/mariohamann/statamic-visual-editor",
+                "reference": "5efb11d517b33575d276199dbb68f92fc553a527"
+            },
+            "require": {
+                "statamic/cms": "^6.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^10.8"
+            },
+            "type": "library",
+            "extra": {
+                "statamic": {
+                    "name": "Statamic Visual Editor",
+                    "description": "Statamic Visual Editor addon"
+                },
+                "laravel": {
+                    "providers": [
+                        "Mariohamann\\StatamicVisualEditor\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mariohamann\\StatamicVisualEditor\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Mariohamann\\StatamicVisualEditor\\Tests\\": "tests"
+                }
+            },
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "michelf/php-smartypants",
@@ -12509,7 +12549,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "mariohamann/statamic-visual-editor": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
