@@ -395,3 +395,34 @@ Most of the folder structure will feel familiar to Laravel developers. However, 
 - GitHub Issues: https://github.com/statamic/cms/issues
 
 </laravel-boost-guidelines>
+
+## Addon Build
+
+After making any changes to the addon (`addons/mariohamann/statamic-visual-editor/`), run the following steps in order:
+
+### 1. PHP formatting (if PHP files changed)
+```bash
+vendor/bin/pint addons/mariohamann/statamic-visual-editor/src addons/mariohamann/statamic-visual-editor/tests --format agent
+```
+
+### 2. JS tests (if JS files changed)
+```bash
+cd addons/mariohamann/statamic-visual-editor && npm run test
+```
+
+### 3. Build addon JS assets (if JS files changed)
+```bash
+cd addons/mariohamann/statamic-visual-editor && npm run build
+```
+
+### 4. Publish built assets to `public/` (after every JS build)
+```bash
+php artisan vendor:publish --provider="Mariohamann\StatamicVisualEditor\ServiceProvider" --force
+```
+
+This copies `addons/mariohamann/statamic-visual-editor/resources/dist/build/` → `public/vendor/statamic-visual-editor/build/`, which is what the `InjectBridgeScript` middleware actually serves to the Live Preview iframe.
+
+### 5. PHP tests (if PHP files changed)
+```bash
+php artisan test --compact
+```
