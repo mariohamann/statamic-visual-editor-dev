@@ -241,3 +241,7 @@ Text Nodes in Bards should allow the same behaviour. This will require a differe
 ### 12.6 Optimize focus indicators in CP
 - Currently it can happen that an element gets two focus outlines in Bard. This actually comes from the fact that statamic adds a outline to the first element inside data-sve-active, so two elemetns get the focus.
 - In addition it would be good to always show the indicator if something is selected in the preview as well, sometimes only e. g. an input inside is getting the focus then.
+
+### 12.7 Improve Tags in Preview
+- The tag describing the element is currently showing up inside the element, which leads to overlapping content. Put it over the element with a bit of margin.
+- Can we use the display names instead of the fields slug instead?

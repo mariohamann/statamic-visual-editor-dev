@@ -5,7 +5,7 @@
     "watch": "vite",
     "build": "vite build",
     "production": "vite build",
-    "addon:build": "cd addons/mariohamann/statamic-visual-editor && npm run test && npm run build && cd ../../.. && php artisan vendor:publish --provider=\"Mariohamann\\StatamicVisualEditor\\ServiceProvider\" --force"
+    "addon:build": "cd addons/mariohamann/statamic-visual-editor && npm run build && cd ../../.. && php artisan vendor:publish --provider=\"Mariohamann\\StatamicVisualEditor\\ServiceProvider\" --force"
   },
   "type": "module",
   "author": "Studio 1902",

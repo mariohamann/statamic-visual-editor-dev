@@ -15,6 +15,7 @@
             {{ small ?= 'button--small' }}
             {{ class }}
         "
+        {{ visual_edit:attr }}
         {{ slot:attributes }}
         {{ !faux ?= { partial:statamic-peak-tools::snippets/button_attributes } }}
         {{ aria_label ?= 'aria-label="{aria_label}"' }}
