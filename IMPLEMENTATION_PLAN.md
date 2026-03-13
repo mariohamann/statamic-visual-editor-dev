@@ -228,3 +228,8 @@ Text Nodes in Bards should allow the same behaviour. This will require a differe
   - The hover color should be --theme-color-gray-400
 - When moving the mouse in the preview, all areas that are clickable should show the hover outline but dashed. After 1.5 seconds the dashed outline should disappear.
 - Only the element that would be focused on click should not be dashed and always stay visible when being hovered === the most inner clickable element with the visual-id that is currently hovered?
+
+### 12.4 Improve outlines/focus in CP
+- The active set or element in repeaters should have a solid outline with --focus-outline-color
+- The hovered set or element in repeater should have a dashed outline with --focus-outline-color
+- In Bard the focus should be set programmatically.

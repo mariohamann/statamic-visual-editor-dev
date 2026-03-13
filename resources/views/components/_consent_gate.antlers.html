@@ -17,6 +17,7 @@
         x-data
     {{ /if }}
     class="{{ class }}"
+    {{ visual_edit:attr }}
 >
     <div class="relative {{ aspect_ratio ?? 'aspect-video' }}">
         {{ if _consent_embeds }}
