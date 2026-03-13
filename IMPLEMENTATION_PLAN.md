@@ -237,3 +237,7 @@ Text Nodes in Bards should allow the same behaviour. This will require a differe
 ### 12.5 Improve Scrolling in CP
 - When scrolling inside bard, the element with class `bard-fixed-toolbar` and it's margin etc. should be taken into account to prevent the focused element from being hidden behind the toolbar.
 - When scrolling to text inside bard, there's always first a scroll to the top of the bard and then a scroll to the text. This should be improved to scroll directly to the text.
+
+### 12.6 Optimize focus indicators in CP
+- Currently it can happen that an element gets two focus outlines in Bard. This actually comes from the fact that statamic adds a outline to the first element inside data-sve-active, so two elemetns get the focus.
+- In addition it would be good to always show the indicator if something is selected in the preview as well, sometimes only e. g. an input inside is getting the focus then.
