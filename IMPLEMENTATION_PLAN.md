@@ -211,3 +211,20 @@ GIF demonstrating click-to-edit.
 
 ### 11.3 Troubleshooting
 Bridge not injected, UUIDs not appearing, set not found.
+
+---
+
+## 12 – QA
+
+### 12.1 Implement Bidirectional Clicking and Hovering
+Currently it's not working perfectly in both directions. This should be fixed.
+
+### 12.2 Improve Bard UX
+Text Nodes in Bards should allow the same behaviour. This will require a different selector and potentially a different approach to expanding/highlighting.
+
+### 12.3 Improve outlines in preview
+- We want to use colors from CP in the preview – Maybe this has to be injected by the bridge script.
+  - The active color in the preview should be --theme-color-gray-400
+  - The hover color should be --theme-color-gray-400
+- When moving the mouse in the preview, all areas that are clickable should show the hover outline but dashed. After 1.5 seconds the dashed outline should disappear.
+- Only the element that would be focused on click should not be dashed and always stay visible when being hovered === the most inner clickable element with the visual-id that is currently hovered?
