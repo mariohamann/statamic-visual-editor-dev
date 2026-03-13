@@ -233,3 +233,7 @@ Text Nodes in Bards should allow the same behaviour. This will require a differe
 - The active set or element in repeaters should have a solid outline with --focus-outline-color
 - The hovered set or element in repeater should have a dashed outline with --focus-outline-color
 - In Bard the focus should be set programmatically.
+
+### 12.5 Improve Scrolling in CP
+- When scrolling inside bard, the element with class `bard-fixed-toolbar` and it's margin etc. should be taken into account to prevent the focused element from being hidden behind the toolbar.
+- When scrolling to text inside bard, there's always first a scroll to the top of the bard and then a scroll to the text. This should be improved to scroll directly to the text.
