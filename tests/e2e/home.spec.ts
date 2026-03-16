@@ -17,7 +17,19 @@ async function openLivePreview(page: Page): Promise<void> {
     .frameLocator('#live-preview-iframe')
     .locator('[data-sid]')
     .first()
-    .waitFor({ timeout: 10000 });
+    .waitFor({ state: 'attached' });
+
+  // bridge.js is a type="module" script — it runs after HTML parsing. Wait for
+  // the style element it injects, which confirms initBridge() has run and all
+  // click/hover/message listeners are registered before any test interaction.
+  await page
+    .frameLocator('#live-preview-iframe')
+    .locator('#__sve-bridge-styles')
+    .waitFor({ state: 'attached' });
+
+  // Wait for the CP's Replicator sets to be rendered (Vue hydration may lag
+  // behind the iframe content being ready).
+  await page.locator('[data-replicator-set]').first().waitFor({ state: 'attached' });
 }
 
 test.describe('Home entry – Live Preview bridge', () => {
@@ -34,6 +46,12 @@ test.describe('Home entry – Live Preview bridge', () => {
     // Article 1 contains only plain text (headings/paragraphs rendered by
     // _text.antlers.html). Each text wrapper is a leaf [data-sid] with the
     // same UID as the outer section. Clicking it reliably sends the article UID.
+    // Wait for the CP's AutoUuid input to be mounted inside the article set so
+    // findSetByUid can resolve the UID before the click fires.
+    await page
+      .locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_1_UID}"])`)
+      .waitFor({ state: 'attached' });
+
     await page
       .frameLocator('#live-preview-iframe')
       .locator(`[data-sid="${ARTICLE_1_UID}"]:not(:has([data-sid]))`)
@@ -94,6 +112,11 @@ test.describe('Home entry – Live Preview bridge', () => {
   });
 
   test('clicking a second element clears active state from the first', async ({ page }) => {
+    // Wait for the article 1 CP input before clicking to avoid findSetByUid race.
+    await page
+      .locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_1_UID}"])`)
+      .waitFor({ state: 'attached' });
+
     const iframe = page.frameLocator('#live-preview-iframe');
 
     // Click article 1 (plain text — no nested data-sid children, center click works)
@@ -121,6 +144,10 @@ test.describe('Home entry – Live Preview bridge', () => {
 
   test('hovering an element in iframe shows hover state on matching CP set', async ({ page }) => {
     await page
+      .locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_1_UID}"])`)
+      .waitFor({ state: 'attached' });
+
+    await page
       .frameLocator('#live-preview-iframe')
       .locator(`[data-sid="${ARTICLE_1_UID}"]`)
       .first()
@@ -142,6 +169,7 @@ test.describe('Home entry – Live Preview bridge', () => {
     const cpArticle1Set = page.locator(
       `[data-replicator-set]:has([data-visual-id="${ARTICLE_1_UID}"])`
     );
+    await cpArticle1Set.waitFor({ state: 'attached' });
     await cpArticle1Set.hover();
 
     await expect(

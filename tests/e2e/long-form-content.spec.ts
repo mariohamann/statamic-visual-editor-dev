@@ -19,7 +19,19 @@ async function openLivePreview(page: Page): Promise<void> {
     .frameLocator('#live-preview-iframe')
     .locator('[data-sid]')
     .first()
-    .waitFor({ timeout: 10000 });
+    .waitFor({ state: 'attached' });
+
+  // bridge.js is a type="module" script — it runs after HTML parsing. Wait for
+  // the style element it injects, which confirms initBridge() has run and all
+  // click/hover/message listeners are registered before any test interaction.
+  await page
+    .frameLocator('#live-preview-iframe')
+    .locator('#__sve-bridge-styles')
+    .waitFor({ state: 'attached' });
+
+  // Wait for the CP's Replicator sets to be rendered (Vue hydration may lag
+  // behind the iframe content being ready).
+  await page.locator('[data-replicator-set]').first().waitFor({ state: 'attached' });
 }
 
 // Nested Bard sets (node-view-wrappers) are only rendered by TipTap once the
@@ -60,6 +72,11 @@ test.describe('Long form content entry – Live Preview bridge', () => {
     // (<div class="span-md">) that has no nested [data-sid] children.
     // event.target.closest('[data-sid]') will return this element with the
     // article UID, so the bridge correctly identifies the article set.
+    // Wait for the CP's AutoUuid input to be ready inside the article set.
+    await page
+      .locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_UID}"])`)
+      .waitFor({ state: 'attached' });
+
     await page
       .frameLocator('#live-preview-iframe')
       .locator(`[data-sid="${ARTICLE_UID}"]:not(:has([data-sid]))`)
@@ -172,6 +189,59 @@ test.describe('Long form content entry – Live Preview bridge', () => {
   });
 
   // -------------------------------------------------------------------------
+  // iframe → CP: Bard text nodes (data-sid-type="text")
+  // -------------------------------------------------------------------------
+
+  test('clicking first text node (before any Bard set) activates article set in CP', async ({
+    page,
+  }) => {
+    // The first text group in the Bard article has no preceding set node, so
+    // the bridge sends afterSetUid=null. The article Replicator set in CP
+    // should become active and the clicked text element should be marked active
+    // in the iframe.
+    await page
+      .locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_UID}"])`)
+      .waitFor({ state: 'attached' });
+    const iframe = page.frameLocator('#live-preview-iframe');
+    const firstTextNode = iframe.locator('[data-sid-type="text"]').first();
+
+    await firstTextNode.click();
+
+    await expect(
+      page.locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_UID}"])`)
+    ).toHaveAttribute('data-sve-active', '');
+
+    await expect(firstTextNode).toHaveAttribute('data-sid-active', '');
+  });
+
+  test('clicking text node after pull_quote Bard set activates article set with correct afterSetUid', async ({
+    page,
+  }) => {
+    // The text group immediately following the pull_quote set should cause the
+    // bridge to send afterSetUid=PULL_QUOTE_UID. The article set becomes active
+    // in CP and the text element is marked active in the iframe.
+    await page
+      .locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_UID}"])`)
+      .waitFor({ state: 'attached' });
+
+    const iframe = page.frameLocator('#live-preview-iframe');
+
+    // Locate the [data-sid-type="text"] element that shares a parent with the
+    // pull_quote element and comes after it.
+    const textAfterPullQuote = iframe
+      .locator(`[data-sid="${PULL_QUOTE_UID}"] ~ [data-sid-type="text"]`)
+      .first();
+
+    await textAfterPullQuote.click();
+
+    await expect(
+      page.locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_UID}"])`)
+    ).toHaveAttribute('data-sve-active', '');
+
+    await expect(textAfterPullQuote).toHaveAttribute('data-sid-active', '');
+  });
+
+  // -------------------------------------------------------------------------
   // State management
   // -------------------------------------------------------------------------
 
@@ -206,6 +276,10 @@ test.describe('Long form content entry – Live Preview bridge', () => {
     // Ensure the form set is NOT the currently active set; if it were, cp.js
     // skips the hover message for already-active elements. Click the article
     // section first to make it the active set, then hover the form.
+    await page
+      .locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_UID}"])`)
+      .waitFor({ state: 'attached' });
+
     await page
       .frameLocator('#live-preview-iframe')
       .locator(`[data-sid="${ARTICLE_UID}"]:not(:has([data-sid]))`)
