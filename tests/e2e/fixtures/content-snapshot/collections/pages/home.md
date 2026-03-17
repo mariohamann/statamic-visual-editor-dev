@@ -69,6 +69,7 @@ page_builder:
             button_type: inline
             type: button
             enabled: true
+            _visual_id: a1b2c3d4-0001-4000-8000-000000000001
         _visual_id: c8b48fcb-69e8-4365-8c28-377a849f422f
       -
         id: lly5mxh7
@@ -91,6 +92,7 @@ page_builder:
             button_type: inline
             type: button
             enabled: true
+            _visual_id: a1b2c3d4-0002-4000-8000-000000000002
         _visual_id: bae8cbc6-4a57-4c41-95bd-1ea81fc5ddfc
       -
         id: lly5nvk4
@@ -113,6 +115,7 @@ page_builder:
             button_type: inline
             type: button
             enabled: true
+            _visual_id: a1b2c3d4-0003-4000-8000-000000000003
         _visual_id: 9c2493a0-f8ab-412c-85af-5b6905bceb4a
     _visual_id: b0ba1160-7f71-4eb7-b60b-f46076d70b5d
   -

@@ -7,6 +7,7 @@ const ARTICLE_1_UID = 'c637b0b2-8208-460c-9a3a-cffdf8376c8c'; // first article R
 const CARD_1_UID = 'c8b48fcb-69e8-4365-8c28-377a849f422f';   // first card item inside the cards page-builder set
 const ARTICLE_2_UID = '941e2737-6b15-46f2-b3f6-f179a6294211'; // second article Replicator set
 const PULL_QUOTE_UID = '7ecc7f15-7f3a-49f5-83c2-880cda2e2ceb'; // pull_quote Bard set inside article 2
+const CARD_1_BUTTON_UID = 'a1b2c3d4-0001-4000-8000-000000000001'; // button item inside card 1 (cards block → card → button replicator → button set)
 
 async function openLivePreview(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Live Preview' }).click();
@@ -204,5 +205,37 @@ test.describe('Home entry – Live Preview bridge', () => {
     await expect(
       page.frameLocator('#live-preview-iframe').locator(`[data-sid="${ARTICLE_1_UID}"]`).first()
     ).toHaveAttribute('data-sid-hover', '');
+  });
+
+  // -------------------------------------------------------------------------
+  // Deep nesting: string field references (field: 'fieldset.handle')
+  // -------------------------------------------------------------------------
+
+  test('clicking button inside card activates button set and all ancestor sets expand', async ({
+    page,
+  }) => {
+    // The button is nested 4 levels deep:
+    //   page_builder (replicator) → cards set → card item → button (replicator) → button item
+    // The button field is defined as `field: buttons.buttons` (string reference)
+    // and only receives _visual_id after the string-reference fix in InjectVisualIdIntoBlueprint.
+    await page
+      .locator(`[data-replicator-set][data-type="button"]:has([data-visual-id="${CARD_1_BUTTON_UID}"])`)
+      .waitFor({ state: 'attached' });
+
+    await page
+      .frameLocator('#live-preview-iframe')
+      .locator(`[data-sid="${CARD_1_BUTTON_UID}"]`)
+      .first()
+      .click();
+
+    // The button set must be active in the CP
+    await expect(
+      page.locator(`[data-replicator-set][data-type="button"]:has([data-visual-id="${CARD_1_BUTTON_UID}"])`)
+    ).toHaveAttribute('data-sve-active', '');
+
+    // The parent card item must not be collapsed
+    await expect(
+      page.locator(`[data-replicator-set][data-type="card"]:has([data-visual-id="${CARD_1_UID}"])`)
+    ).not.toHaveAttribute('data-collapsed', 'true');
   });
 });
