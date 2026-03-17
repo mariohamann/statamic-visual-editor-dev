@@ -6,6 +6,8 @@ Enable Storyblok-like click-to-edit functionality in Statamic 6's Live Preview. 
 - We're testing interactions in `tests/e2e` with Playwright with real browser testing against the live preview (`https://live-editor.test`).
 - Components have to get a `{{ visual_edit:attr }}` attribute in Antlers template. You can find examples in `resources/views/components`.
 
+Always write tests for new features and bug fixes, and run them before finalizing.
+
 <laravel-boost-guidelines>
 === foundation rules ===
 
