@@ -158,6 +158,35 @@ test.describe('Home entry – Live Preview bridge', () => {
     ).toHaveAttribute('data-sve-hover', '');
   });
 
+  test('CP hover dashes clear when mouse exits the preview iframe', async ({ page }) => {
+    await page
+      .locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_1_UID}"])`)
+      .waitFor({ state: 'attached' });
+
+    // Hover a preview element so CP dashes appear.
+    await page
+      .frameLocator('#live-preview-iframe')
+      .locator(`[data-sid="${ARTICLE_1_UID}"]`)
+      .first()
+      .hover();
+
+    await expect(
+      page.locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_1_UID}"])`)
+    ).toHaveAttribute('data-sve-hover', '');
+
+    // Simulate the mouse leaving the iframe (same-origin: we can reach its document
+    // directly). This is equivalent to physically moving the mouse out of the iframe
+    // into the surrounding CP chrome — which is what the mouseleave fix handles.
+    await page.evaluate(() => {
+      const iframe = document.getElementById('live-preview-iframe') as HTMLIFrameElement;
+      iframe?.contentDocument?.dispatchEvent(new MouseEvent('mouseleave', { bubbles: false, cancelable: false }));
+    });
+
+    await expect(
+      page.locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_1_UID}"])`)
+    ).not.toHaveAttribute('data-sve-hover');
+  });
+
   // -------------------------------------------------------------------------
   // CP → iframe: hover events
   // -------------------------------------------------------------------------
