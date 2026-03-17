@@ -122,12 +122,6 @@ page_builder:
     id: uzsikCkeHuPe0lwIbKkOv
     article:
       -
-        type: paragraph
-        content:
-          -
-            type: text
-            text: dasdasd
-      -
         type: set
         attrs:
           id: fOpO79t2ItJ-4Hg27KOOY
