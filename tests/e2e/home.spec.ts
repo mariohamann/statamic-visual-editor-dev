@@ -218,8 +218,19 @@ test.describe('Home entry – Live Preview bridge', () => {
     //   page_builder (replicator) → cards set → card item → button (replicator) → button item
     // The button field is defined as `field: buttons.buttons` (string reference)
     // and only receives _visual_id after the string-reference fix in InjectVisualIdIntoBlueprint.
+
+    // Wait for the CP button set (collapsed but attached) to have the visual-id
+    // input rendered — findSetByUid relies on this input being in the DOM.
     await page
       .locator(`[data-replicator-set][data-type="button"]:has([data-visual-id="${CARD_1_BUTTON_UID}"])`)
+      .waitFor({ state: 'attached' });
+
+    // Also wait for the matching data-sid element in the preview iframe to be
+    // attached — ensures bridge.js has annotated the button before we click.
+    await page
+      .frameLocator('#live-preview-iframe')
+      .locator(`[data-sid="${CARD_1_BUTTON_UID}"]`)
+      .first()
       .waitFor({ state: 'attached' });
 
     await page
