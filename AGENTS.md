@@ -2,6 +2,10 @@
 
 Enable Storyblok-like click-to-edit functionality in Statamic 6's Live Preview. Authors click any annotated element in the preview iframe and the corresponding Replicator or Bard set in the Control Panel automatically expands, scrolls into view, and highlights. The feature ships as an installable Composer package (Statamic addon) with zero production footprint.
 
+- The addon is located in `addons/mariohamann/statamic-visual-editor/`. Here the main work should happen.
+- We're testing interactions in `tests/e2e` with Playwright with real browser testing against the live preview (`https://live-editor.test`).
+- Components have to get a `{{ visual_edit:attr }}` attribute in Antlers template. You can find examples in `resources/views/components`.
+
 <laravel-boost-guidelines>
 === foundation rules ===
 
