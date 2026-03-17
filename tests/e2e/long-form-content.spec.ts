@@ -301,4 +301,31 @@ test.describe('Long form content entry – Live Preview bridge', () => {
       page.frameLocator('#live-preview-iframe').locator(`[data-sid="${FORM_UID}"]`).first()
     ).toHaveAttribute('data-sid-hover', '');
   });
+
+  // -------------------------------------------------------------------------
+  // Tab switching: iframe click on inactive tab's content switches CP tab
+  // -------------------------------------------------------------------------
+
+  test('clicking element in iframe while on SEO tab switches CP to main tab and activates set', async ({
+    page,
+  }) => {
+    // Navigate to the SEO tab in the CP.
+    await page.getByRole('tab', { name: 'SEO' }).click();
+    await expect(page.getByRole('tab', { name: 'SEO' })).toHaveAttribute('data-state', 'active');
+
+    // Click the form set element in the iframe (simpler than article — no nested Bard).
+    await page
+      .frameLocator('#live-preview-iframe')
+      .locator(`[data-sid="${FORM_UID}"]`)
+      .first()
+      .click();
+
+    // The Main tab should now be active.
+    await expect(page.getByRole('tab', { name: 'Main' })).toHaveAttribute('data-state', 'active');
+
+    // The form set in the CP should be highlighted as active.
+    await expect(
+      page.locator(`[data-replicator-set]:has([data-visual-id="${FORM_UID}"])`)
+    ).toHaveAttribute('data-sve-active', '');
+  });
 });
