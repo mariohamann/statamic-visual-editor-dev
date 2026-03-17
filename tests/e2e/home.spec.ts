@@ -8,6 +8,7 @@ const CARD_1_UID = 'c8b48fcb-69e8-4365-8c28-377a849f422f';   // first card item 
 const ARTICLE_2_UID = '941e2737-6b15-46f2-b3f6-f179a6294211'; // second article Replicator set
 const PULL_QUOTE_UID = '7ecc7f15-7f3a-49f5-83c2-880cda2e2ceb'; // pull_quote Bard set inside article 2
 const CARD_1_BUTTON_UID = 'a1b2c3d4-0001-4000-8000-000000000001'; // button item inside card 1 (cards block → card → button replicator → button set)
+const CARDS_BLOCK_UID = 'b0ba1160-7f71-4eb7-b60b-f46076d70b5d';   // cards page-builder set (direct parent of all card items, itself contains nested sets)
 
 async function openLivePreview(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Live Preview' }).click();
@@ -205,6 +206,61 @@ test.describe('Home entry – Live Preview bridge', () => {
     await expect(
       page.frameLocator('#live-preview-iframe').locator(`[data-sid="${ARTICLE_1_UID}"]`).first()
     ).toHaveAttribute('data-sid-hover', '');
+  });
+
+  // -------------------------------------------------------------------------
+  // Regression: getUidFromSet must return the set's own UID, not a nested child's
+  // -------------------------------------------------------------------------
+
+  test('hovering CP set with nested child sets sends the parent UID to preview', async ({ page }) => {
+    // Before the fix, getUidFromSet used querySelector('[data-visual-id]') which
+    // returned the first nested descendant's UID (the button's) because _visual_id
+    // is appended last to each set's fields — making nested IDs appear first in DOM
+    // order. Hovering the cards block would send the button UID to the preview
+    // and highlight the button instead of the cards block.
+    const cardsBlockSet = page.locator(`[data-replicator-set]:has([data-visual-id="${CARDS_BLOCK_UID}"])`);
+    await cardsBlockSet.waitFor({ state: 'attached' });
+
+    // Dispatch mouseover directly on the set element so closest(anySet) resolves
+    // to the cards block itself, not a nested card or button set.
+    await cardsBlockSet.dispatchEvent('mouseover');
+
+    // The cards block element in the preview must receive the hover highlight.
+    await expect(
+      page.frameLocator('#live-preview-iframe').locator(`[data-sid="${CARDS_BLOCK_UID}"]`)
+    ).toHaveAttribute('data-sid-hover', '');
+
+    // The nested button must NOT receive data-sid-hover — that was the bug.
+    await expect(
+      page.frameLocator('#live-preview-iframe').locator(`[data-sid="${CARD_1_BUTTON_UID}"]`).first()
+    ).not.toHaveAttribute('data-sid-hover');
+  });
+
+  test('clicking CP set with nested child sets sends the parent UID to preview', async ({ page }) => {
+    // Same regression but for the click handler: clicking the cards block (e.g.
+    // its "Features" heading field) must focus the cards block in the preview,
+    // not the nested button.
+    const cardsBlockSet = page.locator(`[data-replicator-set]:has([data-visual-id="${CARDS_BLOCK_UID}"])`);
+    await cardsBlockSet.waitFor({ state: 'attached' });
+
+    await page
+      .frameLocator('#live-preview-iframe')
+      .locator(`[data-sid="${CARDS_BLOCK_UID}"]`)
+      .waitFor({ state: 'attached' });
+
+    // Dispatch click directly on the set element — the CP handleClick calls
+    // getUidFromSet which must now return CARDS_BLOCK_UID (not the button UID).
+    await cardsBlockSet.dispatchEvent('click');
+
+    // The cards block element in the preview must receive data-sid-active.
+    await expect(
+      page.frameLocator('#live-preview-iframe').locator(`[data-sid="${CARDS_BLOCK_UID}"]`)
+    ).toHaveAttribute('data-sid-active', '');
+
+    // The nested button must NOT be focused in the preview.
+    await expect(
+      page.frameLocator('#live-preview-iframe').locator(`[data-sid="${CARD_1_BUTTON_UID}"]`).first()
+    ).not.toHaveAttribute('data-sid-active');
   });
 
   // -------------------------------------------------------------------------
