@@ -166,12 +166,12 @@ test.describe('Manual field targeting via field= param', () => {
   // Preview side: [data-sid-field] elements have correct attributes
   // ---------------------------------------------------------------------------
 
-  test('[data-sid-field] elements retain their label in the preview', async ({ page }) => {
+  test('[data-sid-field] elements auto-resolve their label from the blueprint in the preview', async ({ page }) => {
     const el = page
       .frameLocator('#live-preview-iframe')
       .locator('[data-sid-field="title"]');
 
-    await expect(el).toHaveAttribute('data-sid-label', 'Page Title');
+    await expect(el).toHaveAttribute('data-sid-label', 'Title');
   });
 
   test('[data-sid-field="page_info.author"] has correct dot-notation path', async ({ page }) => {
