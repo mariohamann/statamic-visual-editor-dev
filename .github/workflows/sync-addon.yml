@@ -37,6 +37,15 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+
+      - name: Install Composer dependencies (provides @statamic/cms npm package)
+        working-directory: addons/mariohamann/statamic-visual-editor
+        run: composer install --no-interaction --prefer-dist --no-progress
+
       - name: Build addon JS assets
         working-directory: addons/mariohamann/statamic-visual-editor
         run: npm ci && npm run build
