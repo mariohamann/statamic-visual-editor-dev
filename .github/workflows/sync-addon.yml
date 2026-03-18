@@ -28,9 +28,14 @@ jobs:
             --prefix=addons/mariohamann/statamic-visual-editor \
             -b addon-split
 
+      - name: Set up SSH deploy key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.ADDON_DEPLOY_KEY }}
+
       - name: Push to standalone repository
         run: |
           git push \
-            https://x-access-token:${{ secrets.ADDON_REPO_TOKEN }}@github.com/mariohamann/statamic-visual-editor.git \
+            git@github.com:mariohamann/statamic-visual-editor.git \
             addon-split:main \
             --force
