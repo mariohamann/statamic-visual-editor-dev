@@ -211,4 +211,55 @@ test.describe('Manual field targeting via field= param', () => {
 
     expect(outlineOffset).toBe('-2px');
   });
+
+  // ---------------------------------------------------------------------------
+  // CP → Preview: clicking a CP field focuses the preview element
+  // ---------------------------------------------------------------------------
+
+  test('clicking #field_title in CP focuses [data-sid-field="title"] in preview', async ({ page }) => {
+    await page.locator('#field_title').waitFor({ state: 'attached' });
+
+    await page.locator('#field_title').click();
+
+    await expect(
+      page.frameLocator('#live-preview-iframe').locator('[data-sid-field="title"]')
+    ).toHaveAttribute('data-sid-active', '');
+  });
+
+  test('clicking #field_seo_description in CP focuses [data-sid-field="seo_description"] in preview', async ({
+    page,
+  }) => {
+    // Navigate to the SEO tab where seo_description lives.
+    await page.locator('[role="tab"]', { hasText: /seo/i }).click();
+    await page.locator('#field_seo_description').waitFor({ state: 'visible' });
+
+    await page.locator('#field_seo_description').click();
+
+    await expect(
+      page.frameLocator('#live-preview-iframe').locator('[data-sid-field="seo_description"]')
+    ).toHaveAttribute('data-sid-active', '');
+  });
+
+  test('clicking #field_title in CP sets data-sve-active on the CP field wrapper', async ({ page }) => {
+    await page.locator('#field_title').waitFor({ state: 'attached' });
+
+    await page.locator('#field_title').click();
+
+    await expect(page.locator('#field_title')).toHaveAttribute('data-sve-active', '');
+  });
+
+  test('hovering a CP field that already has data-sve-active does not apply data-sve-hover', async ({ page }) => {
+    await page.locator('#field_title').waitFor({ state: 'attached' });
+
+    // Activate the field via a preview click so data-sve-active is set.
+    await page
+      .frameLocator('#live-preview-iframe')
+      .locator('[data-sid-field="title"]')
+      .click();
+    await expect(page.locator('#field_title')).toHaveAttribute('data-sve-active', '');
+
+    // Hover over the same field in the CP — hover must not override active.
+    await page.locator('#field_title').hover();
+    await expect(page.locator('#field_title')).not.toHaveAttribute('data-sve-hover');
+  });
 });

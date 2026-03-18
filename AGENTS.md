@@ -1,14 +1,19 @@
 # GOAL
 
-Enable Storyblok-like click-to-edit functionality in Statamic 6's Live Preview. Authors click any annotated element in the preview iframe and the corresponding Replicator or Bard set in the Control Panel automatically expands, scrolls into view, and highlights. The feature ships as an installable Composer package (Statamic addon) with zero production footprint.
+Enable Storyblok-like click-to-edit functionality in Statamic 6's Live Preview. When authors click any annotated element in the preview iframe, the corresponding Replicator or Bard set in the Control Panel automatically expands, scrolls into view, and highlights. The addon ships as an installable Composer package with zero production footprint.
 
-- The addon is located in `addons/mariohamann/statamic-visual-editor/`. Here the main work should happen.
-- We're testing interactions in `tests/e2e` with Playwright with real browser testing against the live preview (`https://live-editor.test`).
-- Components have to get a `{{ visual_edit:attr }}` attribute in Antlers template. You can find examples in `resources/views/components`.
+**Project structure**
 
-Always write tests for new features and bug fixes, and run them before finalizing.
+- Read `./ARCHITECTURE.md` before making changes to understand how all parts connect. Update it if you spot gaps.
+- The addon lives in `addons/mariohamann/statamic-visual-editor/` — this is where the main work happens.
+- E2E tests are in `tests/e2e/` using Playwright, running against the live preview at `https://live-editor.test`.
+- Antlers templates get a `{{ visual_edit:attr }}` attribute on components. See `resources/views/components/` for examples.
 
-If something changes for develoers working on the addon, update `addons/mariohamann/statamic-visual-editor/README.md`. This is especially important for new features, changes in the addon's API etc.
+**Rules**
+
+- Always write tests for new features and bug fixes, and run them before finalizing.
+- Update `addons/mariohamann/statamic-visual-editor/README.md` whenever the addon's API or developer-facing behavior changes.
+
 
 <laravel-boost-guidelines>
 === foundation rules ===
