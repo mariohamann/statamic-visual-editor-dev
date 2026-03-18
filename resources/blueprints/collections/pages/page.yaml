@@ -71,3 +71,21 @@ tabs:
               generate: true
               listable: hidden
               display: Slug
+          -
+            handle: page_info
+            field:
+              type: group
+              display: 'Page Info'
+              instructions: 'Additional metadata for this page.'
+              fields:
+                -
+                  handle: author
+                  field:
+                    type: text
+                    display: Author
+                    input_type: text
+                -
+                  handle: notes
+                  field:
+                    type: textarea
+                    display: Notes
