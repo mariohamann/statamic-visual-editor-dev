@@ -425,7 +425,7 @@ cd addons/mariohamann/statamic-visual-editor && npm run build
 
 ### 3. Publish built assets to `public/` (after every JS build)
 ```bash
-php artisan vendor:publish --provider="Mariohamann\StatamicVisualEditor\ServiceProvider" --force
+php artisan vendor:publish --provider="MarioHamann\StatamicVisualEditor\ServiceProvider" --force
 ```
 
 This copies `addons/mariohamann/statamic-visual-editor/resources/dist/build/` → `public/vendor/statamic-visual-editor/build/`, which is what the `InjectBridgeScript` middleware actually serves to the Live Preview iframe.
