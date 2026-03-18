@@ -5,27 +5,27 @@
       <span class="text-gray-400 tracking-widest uppercase text-[10px]">page metadata</span>
     </div>
     <div class="divide-y divide-gray-800">
-      <div {{ visual_edit:attr field="title" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
+      <div {{ visual_edit field="title" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
         <span class="text-gray-500">title</span>
         <span class="text-gray-100 truncate">{{ title }}</span>
       </div>
-      <div {{ visual_edit:attr field="slug" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
+      <div {{ visual_edit field="slug" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
         <span class="text-gray-500">slug</span>
         <span class="text-blue-300 truncate">/{{ slug }}</span>
       </div>
-      <div {{ visual_edit:attr field="seo_title" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
+      <div {{ visual_edit field="seo_title" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
         <span class="text-gray-500">seo_title</span>
         <span class="text-gray-100 truncate">{{ seo_title ?? title }}</span>
       </div>
-      <div {{ visual_edit:attr field="seo_description" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
+      <div {{ visual_edit field="seo_description" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
         <span class="text-gray-500">seo_description</span>
         <span class="text-gray-300 truncate">{{ seo_description ?? '—' }}</span>
       </div>
-      <div {{ visual_edit:attr field="page_info.author" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
+      <div {{ visual_edit field="page_info.author" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
         <span class="text-gray-500">page_info.author</span>
         <span class="text-gray-300 truncate">{{ page_info:author ?? '—' }}</span>
       </div>
-      <div {{ visual_edit:attr field="page_info.notes" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
+      <div {{ visual_edit field="page_info.notes" outline-inside="true" }} class="grid grid-cols-[7rem_1fr] gap-2 px-3 py-1.5 hover:bg-gray-800 cursor-pointer transition-colors">
         <span class="text-gray-500">page_info.notes</span>
         <span class="text-gray-300 truncate">{{ page_info:notes ?? '—' }}</span>
       </div>
