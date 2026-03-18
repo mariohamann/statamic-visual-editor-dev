@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - "addons/mariohamann/statamic-visual-editor/**"
+    tags:
+      - "v*"
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -38,4 +41,15 @@ jobs:
           git push \
             git@github.com:mariohamann/statamic-visual-editor.git \
             addon-split:main \
+            --force
+
+      - name: Push tag to standalone repository
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          SPLIT_SHA=$(git rev-parse addon-split)
+          TAG=${GITHUB_REF#refs/tags/}
+          git tag "$TAG" "$SPLIT_SHA" --force
+          git push \
+            git@github.com:mariohamann/statamic-visual-editor.git \
+            "refs/tags/$TAG" \
             --force
