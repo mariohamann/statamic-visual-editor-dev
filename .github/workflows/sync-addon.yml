@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "addons/mariohamann/statamic-visual-editor/**"
+      - "/Users/mario.hamann/Documents/GitHub/live-editor/.github/workflows/sync-addon.yml"
     tags:
       - "v*"
   workflow_dispatch:
@@ -30,6 +31,27 @@ jobs:
           git subtree split \
             --prefix=addons/mariohamann/statamic-visual-editor \
             -b addon-split
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build addon JS assets
+        working-directory: addons/mariohamann/statamic-visual-editor
+        run: npm ci && npm run build
+
+      - name: Save built assets to temp
+        run: cp -r addons/mariohamann/statamic-visual-editor/resources/dist/build /tmp/addon-dist-build
+
+      - name: Commit built assets into split branch
+        run: |
+          git checkout addon-split
+          mkdir -p resources/dist/build
+          cp -r /tmp/addon-dist-build/. resources/dist/build/
+          git add resources/dist/build
+          git diff --cached --quiet || git commit -m "chore: include built assets"
+          git checkout -
 
       - name: Set up SSH deploy key
         uses: webfactory/ssh-agent@v0.9.0
