@@ -58,7 +58,7 @@ jobs:
           git checkout addon-split
           mkdir -p resources/dist/build
           cp -r /tmp/addon-dist-build/. resources/dist/build/
-          git add resources/dist/build
+          git add -f resources/dist/build
           git diff --cached --quiet || git commit -m "chore: include built assets"
           git checkout -
 
