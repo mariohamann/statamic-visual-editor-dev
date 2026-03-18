@@ -10,6 +10,9 @@ const TABLE_UID = '7d3caaa8-6c1f-4c46-97e4-917718cae2fe'; // table Bard set insi
 const VIDEO_UID = '52e46cbc-cc5d-4453-8e04-b0a129dcc0d8'; // video Bard set inside article
 const BUTTONS_UID = '2ea52104-031d-4b6d-ac9b-e833ed339744'; // buttons Bard set inside article
 const FORM_UID = '878e266e-309e-4aef-88a3-c7aa2fd3fd32'; // form Replicator set
+// Consecutive Bard sets added to the fixture (no text node between them)
+const CONSECUTIVE_SET_1_UID = 'a1111111-aaaa-4aaa-8aaa-aaaaaaaaaaaa'; // pull_quote immediately before consecutive image
+const CONSECUTIVE_SET_2_UID = 'b2222222-bbbb-4bbb-8bbb-bbbbbbbbbbbb'; // image immediately after consecutive pull_quote
 
 async function openLivePreview(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Live Preview' }).click();
@@ -328,4 +331,129 @@ test.describe('Long form content entry – Live Preview bridge', () => {
       page.locator(`[data-replicator-set]:has([data-visual-id="${FORM_UID}"])`)
     ).toHaveAttribute('data-sve-active', '');
   });
+
+  // -------------------------------------------------------------------------
+  // Consecutive Bard sets (no text node between them)
+  // -------------------------------------------------------------------------
+
+  test('clicking first of two consecutive Bard sets activates its CP node-view', async ({
+    page,
+  }) => {
+    await expandArticleAndWaitForBardSet(page, CONSECUTIVE_SET_1_UID);
+
+    await page
+      .frameLocator('#live-preview-iframe')
+      .locator(`[data-sid="${CONSECUTIVE_SET_1_UID}"]`)
+      .first()
+      .dispatchEvent('click');
+
+    await expect(
+      page.locator(`[data-node-view-wrapper]:has([data-visual-id="${CONSECUTIVE_SET_1_UID}"])`)
+    ).toHaveAttribute('data-sve-active', '');
+  });
+
+  test('clicking second of two consecutive Bard sets activates its own CP node-view, not the first', async ({
+    page,
+  }) => {
+    await expandArticleAndWaitForBardSet(page, CONSECUTIVE_SET_2_UID);
+
+    await page
+      .frameLocator('#live-preview-iframe')
+      .locator(`[data-sid="${CONSECUTIVE_SET_2_UID}"]`)
+      .first()
+      .dispatchEvent('click');
+
+    // Second set must be active.
+    await expect(
+      page.locator(`[data-node-view-wrapper]:has([data-visual-id="${CONSECUTIVE_SET_2_UID}"])`)
+    ).toHaveAttribute('data-sve-active', '');
+
+    // First set must NOT be active.
+    await expect(
+      page.locator(`[data-node-view-wrapper]:has([data-visual-id="${CONSECUTIVE_SET_1_UID}"])`)
+    ).not.toHaveAttribute('data-sve-active');
+  });
+
+  // -------------------------------------------------------------------------
+  // Text node at the END of Bard (after the last set)
+  // -------------------------------------------------------------------------
+
+  test('clicking the trailing text node after the last Bard set activates the article set in CP', async ({
+    page,
+  }) => {
+    await page
+      .locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_UID}"])`)
+      .waitFor({ state: 'attached' });
+
+    const iframe = page.frameLocator('#live-preview-iframe');
+
+    // The trailing paragraph is the last [data-sid-type="text"] inside the
+    // article Bard field — it comes after all set nodes (including the two
+    // consecutive sets added to the fixture).
+    const trailingTextNode = iframe.locator('[data-sid-type="text"]').last();
+
+    await trailingTextNode.scrollIntoViewIfNeeded();
+    await trailingTextNode.click();
+
+    // The article Replicator set should become active (the trailing text has
+    // no following Bard set, so afterSetUid is null, same as first-text logic).
+    await expect(
+      page.locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_UID}"])`)
+    ).toHaveAttribute('data-sve-active', '');
+
+    await expect(trailingTextNode).toHaveAttribute('data-sid-active', '');
+  });
+
+  // -------------------------------------------------------------------------
+  // Rapid click spam (debounce / dedup verification)
+  // -------------------------------------------------------------------------
+
+  test('rapid consecutive clicks on the same Bard set produce exactly one active highlight', async ({
+    page,
+  }) => {
+    await page
+      .locator(`[data-replicator-set]:has([data-visual-id="${ARTICLE_UID}"])`)
+      .waitFor({ state: 'attached' });
+
+    const iframe = page.frameLocator('#live-preview-iframe');
+    const target = iframe.locator(`[data-sid="${FORM_UID}"]`).first();
+
+    // Dispatch five clicks in rapid succession without awaiting CP state between them.
+    for (let i = 0; i < 5; i++) {
+      await target.dispatchEvent('click');
+    }
+
+    // After all clicks settle, exactly one Replicator set must be active.
+    await expect(
+      page.locator(`[data-replicator-set]:has([data-visual-id="${FORM_UID}"])`)
+    ).toHaveAttribute('data-sve-active', '');
+
+    const activeCount = await page.locator('[data-replicator-set][data-sve-active]').count();
+    expect(activeCount).toBe(1);
+  });
+
+  test('rapid clicks alternating between two Bard sets settles on the last clicked set', async ({
+    page,
+  }) => {
+    await expandArticleAndWaitForBardSet(page, PULL_QUOTE_UID);
+
+    const iframe = page.frameLocator('#live-preview-iframe');
+    const pullQuote = iframe.locator(`[data-sid="${PULL_QUOTE_UID}"]`).first();
+    const form = iframe.locator(`[data-sid="${FORM_UID}"]`).first();
+
+    // Alternate rapidly: pull_quote → form → pull_quote → form → form (last)
+    for (const uid of [PULL_QUOTE_UID, FORM_UID, PULL_QUOTE_UID, FORM_UID, FORM_UID]) {
+      await iframe.locator(`[data-sid="${uid}"]`).first().dispatchEvent('click');
+    }
+
+    // After settling, form (the last clicked target) should be the active set.
+    await expect(
+      page.locator(`[data-replicator-set]:has([data-visual-id="${FORM_UID}"])`)
+    ).toHaveAttribute('data-sve-active', '');
+
+    // Only one active set should exist.
+    const activeCount = await page.locator('[data-replicator-set][data-sve-active]').count();
+    expect(activeCount).toBeLessThanOrEqual(1);
+  });
 });
+

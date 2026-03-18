@@ -259,6 +259,32 @@ page_builder:
                 enabled: true
                 _visual_id: 9268eaa9-16ca-4ada-b341-10937ac3113c
             _visual_id: 2ea52104-031d-4b6d-ac9b-e833ed339744
+      -
+        type: set
+        attrs:
+          id: consec1AAA
+          values:
+            type: pull_quote
+            size: md
+            quote: 'First of two consecutive Bard sets with no text between them.'
+            author: 'Consecutive Test'
+            _visual_id: a1111111-aaaa-4aaa-8aaa-aaaaaaaaaaaa
+      -
+        type: set
+        attrs:
+          id: consec2BBB
+          values:
+            type: image
+            size: md
+            caption: 'Second consecutive set immediately after the first.'
+            image: a-peak.jpg
+            _visual_id: b2222222-bbbb-4bbb-8bbb-bbbbbbbbbbbb
+      -
+        type: paragraph
+        content:
+          -
+            type: text
+            text: 'This paragraph is the last item in the Bard field — a text node at the very end after all sets.'
     type: article
     enabled: true
     _visual_id: 4daf1d6b-11fb-4528-917f-6ce7a8022f0c
