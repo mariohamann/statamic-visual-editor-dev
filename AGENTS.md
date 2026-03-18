@@ -8,7 +8,7 @@ Enable Storyblok-like click-to-edit functionality in Statamic 6's Live Preview. 
 
 Always write tests for new features and bug fixes, and run them before finalizing.
 
-If something changes for develoers working on the addon, update `addons/mariohamann/statamic-visual-editor/README.md`.
+If something changes for develoers working on the addon, update `addons/mariohamann/statamic-visual-editor/README.md`. This is especially important for new features, changes in the addon's API etc.
 
 <laravel-boost-guidelines>
 === foundation rules ===

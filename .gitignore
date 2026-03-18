@@ -16,7 +16,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 
-/.phpunit.cache
+/.phpunit*.cache
 
 /public/_build/
 /storage/forms

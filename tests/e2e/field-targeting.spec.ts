@@ -182,4 +182,33 @@ test.describe('Manual field targeting via field= param', () => {
     await expect(el).toHaveAttribute('data-sid-field', 'page_info.author');
     await expect(el).toHaveAttribute('data-sid-label', 'Author');
   });
+
+  // ---------------------------------------------------------------------------
+  // inside="true" param: data-sid-inside attribute and inset outline-offset
+  // ---------------------------------------------------------------------------
+
+  test('meta panel elements have data-sid-inside attribute when outline-inside="true" is set', async ({
+    page,
+  }) => {
+    const iframe = page.frameLocator('#live-preview-iframe');
+
+    // All meta panel elements should carry data-sid-inside.
+    for (const field of ['title', 'slug', 'seo_title', 'seo_description', 'page_info.author', 'page_info.notes']) {
+      await expect(iframe.locator(`[data-sid-field="${field}"]`)).toHaveAttribute('data-sid-inside', '');
+    }
+  });
+
+  test('data-sid-inside elements have inset outline-offset (-2px) applied', async ({ page }) => {
+    const el = page
+      .frameLocator('#live-preview-iframe')
+      .locator('[data-sid-field="title"][data-sid-inside]');
+
+    await expect(el).toBeVisible();
+
+    const outlineOffset = await el.evaluate((node) =>
+      getComputedStyle(node).outlineOffset
+    );
+
+    expect(outlineOffset).toBe('-2px');
+  });
 });
