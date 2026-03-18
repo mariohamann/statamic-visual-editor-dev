@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - "addons/mariohamann/statamic-visual-editor/**"
-      - "/Users/mario.hamann/Documents/GitHub/live-editor/.github/workflows/sync-addon.yml"
+      - ".github/workflows/sync-addon.yml"
     tags:
       - "v*"
   workflow_dispatch:
