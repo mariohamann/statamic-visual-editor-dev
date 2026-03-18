@@ -1,4 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import { config } from 'dotenv';
+
+config();
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -9,7 +12,7 @@ export default defineConfig({
   retries: 3,
   reporter: 'list',
   use: {
-    baseURL: 'https://live-editor.test',
+    baseURL: process.env.APP_URL,
     ignoreHTTPSErrors: true,
     trace: 'on-first-retry',
   },

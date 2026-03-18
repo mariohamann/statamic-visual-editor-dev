@@ -7,7 +7,7 @@ This is the **development repository** for the [Statamic Visual Editor](https://
 | Path | Purpose |
 |---|---|
 | `addons/mariohamann/statamic-visual-editor/` | The addon source (PHP, JS, tests) |
-| `tests/e2e/` | Playwright E2E tests running against `https://live-editor.test` |
+| `tests/e2e/` | Playwright E2E tests running against APP_URL defined in `.env` |
 | Everything else | A stock Statamic site used solely as a test harness |
 
 ## Publishing workflow

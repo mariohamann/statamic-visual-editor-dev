@@ -6,7 +6,7 @@ Enable Storyblok-like click-to-edit functionality in Statamic 6's Live Preview. 
 
 - Read `./ARCHITECTURE.md` before making changes to understand how all parts connect. Update it if you spot gaps.
 - The addon lives in `addons/mariohamann/statamic-visual-editor/` — this is where the main work happens.
-- E2E tests are in `tests/e2e/` using Playwright, running against the live preview at `https://live-editor.test`.
+- E2E tests are in `tests/e2e/` using Playwright, running against the live preview at `APP_URL` defined in `.env`.
 - Antlers templates get a `{{ visual_edit:attr }}` attribute on components. See `resources/views/components/` for examples.
 
 **Rules**
@@ -437,7 +437,7 @@ php artisan test --compact
 
 ### 5. E2E tests (if JS or PHP files changed)
 
-E2E tests require the live site to be running (served by Laravel Herd at `https://live-editor.test`). Run from the workspace root:
+E2E tests require the live site to be running. Run from the workspace root:
 
 ```bash
 npx playwright test
