@@ -2,6 +2,10 @@
 
 This is the **development repository** for the [Statamic Visual Editor](https://github.com/mariohamann/statamic-visual-editor) addon. It embeds the addon inside a complete Statamic project so that E2E tests can run against a real, fully functional site.
 
+## Demo
+
+<video src="https://github.com/user-attachments/assets/97ec557d-2642-4e74-87df-fb365a03154b"></video>
+
 ## Repository structure
 
 | Path | Purpose |
