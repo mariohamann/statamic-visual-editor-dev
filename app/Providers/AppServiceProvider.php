@@ -57,8 +57,8 @@ class AppServiceProvider extends ServiceProvider
                 'fullscreen' => false,
                 'border' => false,
                 'fields' => [
-                    ['import' => 'form_email_config']
-                ]
+                    ['import' => 'form_email_config'],
+                ],
             ],
         ]);
 
@@ -70,8 +70,8 @@ class AppServiceProvider extends ServiceProvider
                 'fullscreen' => false,
                 'border' => false,
                 'fields' => [
-                    ['import' => 'form_email_config']
-                ]
+                    ['import' => 'form_email_config'],
+                ],
             ],
         ]);
     }

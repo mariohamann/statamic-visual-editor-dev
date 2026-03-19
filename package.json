@@ -1,11 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "watch": "vite",
-    "build": "vite build",
-    "production": "vite build",
-    "addon:build": "cd addons/mariohamann/statamic-visual-editor && npm run build && cd ../../.. && php artisan vendor:publish --provider=\"MarioHamann\\StatamicVisualEditor\\ServiceProvider\" --force",
+    "format": "vendor/bin/pint . --format agent",
+    "build": "cd addons/mariohamann/statamic-visual-editor && npm run build && cd ../../.. && php artisan vendor:publish --provider=\"MarioHamann\\StatamicVisualEditor\\ServiceProvider\" --force",
+    "test:php": "cd addons/mariohamann/statamic-visual-editor && vendor/bin/phpunit",
     "test:e2e": "playwright test"
   },
   "type": "module",
