@@ -3,8 +3,9 @@
   "scripts": {
     "format": "vendor/bin/pint . --format agent",
     "build": "cd addons/mariohamann/statamic-visual-editor && npm run build && cd ../../.. && php artisan vendor:publish --provider=\"MarioHamann\\StatamicVisualEditor\\ServiceProvider\" --force",
+    "test": "npm run test:php && npm run test:e2e",
     "test:php": "cd addons/mariohamann/statamic-visual-editor && vendor/bin/phpunit",
-    "test:e2e": "playwright test"
+    "test:e2e": "npm run build && playwright test"
   },
   "type": "module",
   "author": "Mario Hamann",
