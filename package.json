@@ -3,6 +3,7 @@
   "scripts": {
     "format": "vendor/bin/pint .",
     "build": "cd addons/mariohamann/statamic-visual-editor && npm run build && cd ../../.. && php artisan vendor:publish --provider=\"MarioHamann\\StatamicVisualEditor\\ServiceProvider\" --force",
+    "page:build": "vite build",
     "test": "npm run test:php && npm run test:e2e",
     "test:php": "cd addons/mariohamann/statamic-visual-editor && vendor/bin/phpunit --testdox",
     "test:e2e": "npm run compact.build && playwright test",

@@ -32,7 +32,7 @@ honeypot: fax
 email:
   -
     id: iwArpANx
-    to: mario.hamann@virtual-identity.com
+    to: demo@example.com
     reply_to: '{{ email }}'
     subject: '{{ trans:strings.form_subject_received }}'
     html: email/form_owner
@@ -40,7 +40,7 @@ email:
   -
     id: p0bMnaXJ
     to: '{{ email }}'
-    reply_to: mario.hamann@virtual-identity.com
+    reply_to: demo@example.com
     subject: '{{ trans:strings.form_subject_sent }}'
     html: email/form_sender
     text: email/form_sender_text

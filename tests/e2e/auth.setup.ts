@@ -21,7 +21,7 @@ setup('authenticate and dismiss license alert', async ({ page }) => {
 
   await page.goto('/cp/auth/login');
   await page.waitForLoadState('networkidle');
-  await page.locator('input[name="email"]').fill('mario.hamann@virtual-identity.com');
+  await page.locator('input[name="email"]').fill('demo@example.com');
   await page.locator('input[name="password"]').fill('password');
   // The Inertia login uses window.location.href on success, which triggers a
   // full browser navigation. waitForNavigation captures that redirect.
