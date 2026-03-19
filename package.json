@@ -5,7 +5,7 @@
     "build": "cd addons/mariohamann/statamic-visual-editor && npm run build && cd ../../.. && php artisan vendor:publish --provider=\"MarioHamann\\StatamicVisualEditor\\ServiceProvider\" --force",
     "test": "npm run test:php && npm run test:e2e",
     "test:php": "cd addons/mariohamann/statamic-visual-editor && vendor/bin/phpunit --testdox",
-    "test:e2e": "npm run build.compact && playwright test",
+    "test:e2e": "npm run compact.build && playwright test",
     "compact.format": "vendor/bin/pint . --format agent",
     "compact.build": "npm run build > /dev/null && echo 'Build and publish successful!'",
     "compact.test": "npm run compact.test:php && npm run compact.test:e2e",

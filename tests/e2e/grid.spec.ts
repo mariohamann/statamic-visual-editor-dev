@@ -102,6 +102,9 @@ test.describe('Grid rows – Live Preview bridge', () => {
   test('hovering first grid row in CP highlights corresponding element in iframe', async ({
     page,
   }) => {
+    await page.getByText('Sidebar', { exact: true }).first().click();
+    await page.waitForTimeout(300);
+
     const cpRow = page.locator(`[data-grid-row]:has([data-visual-id="${LINK_1_UID}"])`);
     await cpRow.waitFor({ state: 'attached' });
 

@@ -14,12 +14,10 @@ links:
     id: sve-grid-row-1
     label: 'Statamic Docs'
     link_url: 'https://statamic.dev'
-    _visual_id: 11111111-1111-4111-8111-111111111111
   -
     id: sve-grid-row-2
     label: 'Peak Starter Kit'
     link_url: 'https://peak.1902.studio'
-    _visual_id: 22222222-2222-4222-8222-222222222222
 page_builder:
   -
     id: T5ZZwBfn
@@ -52,7 +50,6 @@ page_builder:
             text: 'Get climbing!'
     type: article
     enabled: true
-    _visual_id: c637b0b2-8208-460c-9a3a-cffdf8376c8c
   -
     id: eFlcYHyl
     heading: Features
@@ -80,8 +77,6 @@ page_builder:
             button_type: inline
             type: button
             enabled: true
-            _visual_id: a1b2c3d4-0001-4000-8000-000000000001
-        _visual_id: c8b48fcb-69e8-4365-8c28-377a849f422f
       -
         id: lly5mxh7
         heading: 'Long form content'
@@ -103,8 +98,6 @@ page_builder:
             button_type: inline
             type: button
             enabled: true
-            _visual_id: a1b2c3d4-0002-4000-8000-000000000002
-        _visual_id: bae8cbc6-4a57-4c41-95bd-1ea81fc5ddfc
       -
         id: lly5nvk4
         heading: 'Way more features'
@@ -126,9 +119,6 @@ page_builder:
             button_type: inline
             type: button
             enabled: true
-            _visual_id: a1b2c3d4-0003-4000-8000-000000000003
-        _visual_id: 9c2493a0-f8ab-412c-85af-5b6905bceb4a
-    _visual_id: b0ba1160-7f71-4eb7-b60b-f46076d70b5d
   -
     id: uzsikCkeHuPe0lwIbKkOv
     article:
@@ -140,8 +130,6 @@ page_builder:
             type: pull_quote
             size: md
             quote: 'Hello everyone!'
-            _visual_id: 7ecc7f15-7f3a-49f5-83c2-880cda2e2ceb
     type: article
     enabled: true
-    _visual_id: 941e2737-6b15-46f2-b3f6-f179a6294211
 ---

@@ -6,10 +6,12 @@ config({ quiet: true });
 export default defineConfig({
   testDir: './tests/e2e',
   globalSetup: './tests/e2e/global-setup.ts',
+  globalTeardown: './tests/e2e/global-teardown.ts',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   workers: 4,
   retries: 3,
+  timeout: 10_000,
   reporter: 'list',
   use: {
     baseURL: process.env.APP_URL,
