@@ -11,36 +11,848 @@ tabs:
             field:
               type: text
               required: true
-              input_type: text
               localizable: true
               listable: true
               display: Title
               validate:
                 - required
-          -
-            handle: links
-            field:
-              type: grid
-              display: Links
-              mode: stacked
-              fields:
-                -
-                  handle: label
-                  field:
-                    type: text
-                    display: Label
-                    input_type: text
-                -
-                  handle: link_url
-                  field:
-                    type: text
-                    display: URL
-                    input_type: url
       -
         display: 'Page builder'
         fields:
           -
-            import: page_builder
+            handle: page_builder
+            field:
+              type: replicator
+              localizable: true
+              hide_display: true
+              collapse: true
+              listable: false
+              display: 'Page builder'
+              button_label: 'Add block'
+              sets:
+                image_and_text:
+                  display: 'Image and text'
+                  instructions: 'Image and text based blocks.'
+                  icon: hero-image-above-text
+                  sets:
+                    article:
+                      display: Article
+                      instructions: 'Long form content, can be expanded with media like figures, video, quotes or tables.'
+                      icon: text-formatting-image-bottom
+                      image: article.jpeg
+                      fields:
+                        -
+                          handle: article
+                          field:
+                            buttons:
+                              - h1
+                              - h2
+                              - h3
+                              - bold
+                              - italic
+                              - unorderedlist
+                              - orderedlist
+                              - quote
+                              - removeformat
+                              - anchor
+                            reading_time: true
+                            allow_source: true
+                            type: bard
+                            localizable: true
+                            display: Article
+                            replicator_preview: false
+                            validate:
+                              - required
+                            container: files
+                            always_save: false
+                            remove_empty_nodes: true
+                            smart_typography: true
+                            sets:
+                              interactive:
+                                display: Interactive
+                                instructions: 'Interactive sets.'
+                                icon: programming-script-code
+                                sets:
+                                  buttons:
+                                    display: Buttons
+                                    instructions: 'Add one or multiple buttons.'
+                                    icon: link
+                                    image: buttons.jpeg
+                                    fields:
+                                      -
+                                        handle: buttons
+                                        field:
+                                          collapse: accordion
+                                          fullscreen: false
+                                          replicator_preview: false
+                                          button_label: 'Add button'
+                                          type: replicator
+                                          display: Buttons
+                                          actions: false
+                                          sets:
+                                            button:
+                                              display: Button
+                                              sets:
+                                                button:
+                                                  display: Button
+                                                  image: null
+                                                  fields:
+                                                    -
+                                                      handle: label
+                                                      field:
+                                                        input_type: text
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: Label
+                                                        width: 66
+                                                        replicator_preview: false
+                                                        instructions_position: above
+                                                        antlers: false
+                                                    -
+                                                      handle: show_controls
+                                                      field:
+                                                        mode: toggle
+                                                        display: 'Show controls'
+                                                        type: revealer
+                                                        replicator_preview: false
+                                                        icon: revealer
+                                                        width: 33
+                                                        listable: hidden
+                                                        instructions_position: above
+                                                    -
+                                                      handle: link_type
+                                                      field:
+                                                        options:
+                                                          entry: Entry
+                                                          url: URL
+                                                          email: Email
+                                                          tel: Tel
+                                                          sms: SMS
+                                                          asset: Asset
+                                                        type: button_group
+                                                        localizable: true
+                                                        default: entry
+                                                        listable: false
+                                                        display: 'Link type'
+                                                        replicator_preview: false
+                                                        width: 100
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                        instructions_position: above
+                                                        visibility: visible
+                                                        always_save: false
+                                                    -
+                                                      handle: entry
+                                                      field:
+                                                        max_items: 1
+                                                        mode: default
+                                                        type: entries
+                                                        localizable: true
+                                                        width: 100
+                                                        listable: false
+                                                        display: Entry
+                                                        replicator_preview: false
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,entry'
+                                                        if:
+                                                          link_type: entry
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: url
+                                                      field:
+                                                        placeholder: 'https://site.com'
+                                                        input_type: url
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: URL
+                                                        width: 100
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,url'
+                                                        if:
+                                                          link_type: url
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: email
+                                                      field:
+                                                        placeholder: info@site.com
+                                                        input_type: email
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: E-mail
+                                                        width: 100
+                                                        replicator_preview: false
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,email'
+                                                        if:
+                                                          link_type: email
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: tel
+                                                      field:
+                                                        placeholder: '+0 (0)12 345678'
+                                                        input_type: tel
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: Telephone
+                                                        width: 100
+                                                        replicator_preview: false
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,tel'
+                                                        if:
+                                                          link_type: tel
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: sms
+                                                      field:
+                                                        placeholder: '+0 (0)12 345678'
+                                                        input_type: tel
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: Telephone
+                                                        width: 100
+                                                        replicator_preview: false
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,sms'
+                                                        if:
+                                                          link_type: sms
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: asset
+                                                      field:
+                                                        container: files
+                                                        max_files: 1
+                                                        type: assets
+                                                        localizable: true
+                                                        display: Asset
+                                                        always_save: false
+                                                        width: 100
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,asset'
+                                                        if:
+                                                          link_type: asset
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: button_type
+                                                      field:
+                                                        options:
+                                                          button: Button
+                                                          inline: Inline
+                                                        type: button_group
+                                                        localizable: true
+                                                        default: button
+                                                        listable: false
+                                                        display: 'Button type'
+                                                        replicator_preview: false
+                                                        width: 50
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: target_blank
+                                                      field:
+                                                        type: toggle
+                                                        localizable: true
+                                                        width: 50
+                                                        listable: false
+                                                        display: 'Open in new window'
+                                                        replicator_preview: false
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: attr_title
+                                                      field:
+                                                        placeholder: 'Learn more'
+                                                        input_type: text
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: Title
+                                                        width: 50
+                                                        replicator_preview: false
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: attr_aria
+                                                      field:
+                                                        placeholder: 'Download the PDF'
+                                                        input_type: text
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: 'Aria label'
+                                                        width: 50
+                                                        replicator_preview: false
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: tracker_event
+                                                      field:
+                                                        input_type: text
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        placeholder: my-custom-event
+                                                        display: 'Tracker event'
+                                                        instructions: 'Add the name of the event you want to be fired on click. These events only fire on a production environment. Allowed: `A-Z`, `a-z`, `0-9`, `-`, `_`.'
+                                                        validate:
+                                                          - 'regex:/[A-Za-z0-9_\-]+$/'
+                                                        instructions_position: below
+                                                        width: 50
+                                                        replicator_preview: false
+                                                        visibility: visible
+                                                        antlers: false
+                                                        hide_display: false
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                          label: 'custom tracker_events'
+                                                    -
+                                                      handle: _visual_id
+                                                      field:
+                                                        type: auto_uuid
+                                                        visibility: hidden
+                                                        replicator_preview: false
+                                      -
+                                        handle: _visual_id
+                                        field:
+                                          type: auto_uuid
+                                          visibility: hidden
+                                          replicator_preview: false
+                              text:
+                                display: Text
+                                instructions: 'Text based sets.'
+                                icon: text-formatting-initial-letter
+                                sets:
+                                  pull_quote:
+                                    display: 'Pull quote'
+                                    instructions: 'Add a pull quote with an optional author.'
+                                    icon: text-formatting-quotation
+                                    image: pull-quote.jpeg
+                                    fields:
+                                      -
+                                        handle: size
+                                        field:
+                                          options:
+                                            md: Normal
+                                            lg: LG
+                                            xl: XL
+                                          type: button_group
+                                          localizable: true
+                                          default: md
+                                          display: Size
+                                      -
+                                        handle: quote
+                                        field:
+                                          type: textarea
+                                          localizable: true
+                                          listable: hidden
+                                          display: Quote
+                                      -
+                                        handle: author
+                                        field:
+                                          input_type: text
+                                          type: text
+                                          localizable: true
+                                          listable: hidden
+                                          display: Author
+                                      -
+                                        handle: _visual_id
+                                        field:
+                                          type: auto_uuid
+                                          visibility: hidden
+                                          replicator_preview: false
+                                  table:
+                                    display: Table
+                                    instructions: 'Add a data table with headers, rows and columns.'
+                                    icon: add-table
+                                    image: table.jpeg
+                                    fields:
+                                      -
+                                        handle: size
+                                        field:
+                                          options:
+                                            md: Normal
+                                            lg: LG
+                                            xl: XL
+                                          type: button_group
+                                          localizable: true
+                                          default: md
+                                          display: Size
+                                      -
+                                        handle: first_row_headers
+                                        field:
+                                          display: 'First row as header'
+                                          type: toggle
+                                          icon: toggle
+                                          listable: hidden
+                                          width: 50
+                                          instructions: 'Show the first row as header and give it a header styling.'
+                                          instructions_position: below
+                                      -
+                                        handle: first_column_headers
+                                        field:
+                                          display: 'First column as header'
+                                          type: toggle
+                                          icon: toggle
+                                          listable: hidden
+                                          width: 50
+                                          instructions: 'Show the first column as header and give it a header styling.'
+                                          instructions_position: below
+                                      -
+                                        handle: table
+                                        field:
+                                          display: Table
+                                          type: table
+                                          icon: table
+                                          localizable: true
+                                          listable: hidden
+                                      -
+                                        handle: caption
+                                        field:
+                                          input_type: text
+                                          type: text
+                                          localizable: true
+                                          listable: hidden
+                                          display: Caption
+                                      -
+                                        handle: _visual_id
+                                        field:
+                                          type: auto_uuid
+                                          visibility: hidden
+                                          replicator_preview: false
+                              image_video:
+                                display: 'Image and video'
+                                instructions: "Sets with images or embeddable video's."
+                                icon: media-image-camera
+                                sets:
+                                  image:
+                                    display: Image
+                                    instructions: 'Add a single image with an optional caption.'
+                                    icon: hero-image-above-text
+                                    image: image.jpeg
+                                    fields:
+                                      -
+                                        handle: image
+                                        field:
+                                          container: images
+                                          max_files: 1
+                                          type: assets
+                                          localizable: true
+                                          display: Image
+                                          always_save: false
+                                          width: 50
+                                      -
+                                        handle: size
+                                        field:
+                                          options:
+                                            md: Normal
+                                            lg: LG
+                                            xl: XL
+                                          type: button_group
+                                          localizable: true
+                                          default: md
+                                          display: Size
+                                          width: 50
+                                      -
+                                        handle: caption
+                                        field:
+                                          input_type: text
+                                          type: text
+                                          localizable: true
+                                          listable: hidden
+                                          display: Caption
+                                      -
+                                        handle: _visual_id
+                                        field:
+                                          type: auto_uuid
+                                          visibility: hidden
+                                          replicator_preview: false
+                                  video:
+                                    display: Video
+                                    instructions: 'Add a YouTube or Vimeo video with an optional caption.'
+                                    icon: movie-video-clip
+                                    image: video.jpeg
+                                    fields:
+                                      -
+                                        handle: size
+                                        field:
+                                          options:
+                                            md: Normal
+                                            lg: LG
+                                            xl: XL
+                                          type: button_group
+                                          localizable: true
+                                          default: md
+                                          display: Size
+                                          width: 100
+                                      -
+                                        handle: video_url
+                                        field:
+                                          type: video
+                                          display: Video
+                                          icon: video
+                                          instructions: 'YouTube or Vimeo URL.'
+                                          listable: hidden
+                                          instructions_position: below
+                                          visibility: visible
+                                          replicator_preview: true
+                                          hide_display: false
+                                      -
+                                        handle: caption
+                                        field:
+                                          input_type: text
+                                          type: text
+                                          localizable: true
+                                          listable: hidden
+                                          display: Caption
+                                      -
+                                        handle: _visual_id
+                                        field:
+                                          type: auto_uuid
+                                          visibility: hidden
+                                          replicator_preview: false
+                        -
+                          handle: _visual_id
+                          field:
+                            type: auto_uuid
+                            visibility: hidden
+                            replicator_preview: false
+                interactive:
+                  display: Interactive
+                  instructions: 'Interactive blocks.'
+                  icon: programming-script-code
+                  sets:
+                    form:
+                      display: Form
+                      instructions: 'Select and render a form.'
+                      icon: mail-chat-bubble-text
+                      image: form.jpeg
+                      fields:
+                        -
+                          handle: heading
+                          field:
+                            input_type: text
+                            type: text
+                            localizable: true
+                            listable: hidden
+                            display: Title
+                        -
+                          handle: text
+                          field:
+                            type: textarea
+                            localizable: true
+                            display: 'Text plain'
+                        -
+                          handle: form
+                          field:
+                            max_items: 1
+                            type: form
+                            listable: hidden
+                            display: Form
+                            validate:
+                              - required
+                        -
+                          handle: _visual_id
+                          field:
+                            type: auto_uuid
+                            visibility: hidden
+                            replicator_preview: false
+                    cards:
+                      display: Cards
+                      instructions: 'Show linkable cards with text.'
+                      icon: link
+                      image: cards.jpeg
+                      fields:
+                        -
+                          handle: heading
+                          field:
+                            type: text
+                            localizable: true
+                            display: Heading
+                        -
+                          handle: cards
+                          field:
+                            reorderable: true
+                            type: replicator
+                            localizable: true
+                            display: Cards
+                            replicator_preview: false
+                            collapse: accordion
+                            hide_display: true
+                            button_label: 'Add card'
+                            sets:
+                              cards:
+                                display: Cards
+                                sets:
+                                  card:
+                                    display: Card
+                                    image: null
+                                    fields:
+                                      -
+                                        handle: heading
+                                        field:
+                                          type: text
+                                          localizable: true
+                                          validate: required
+                                          display: Heading
+                                      -
+                                        handle: text
+                                        field:
+                                          type: textarea
+                                          localizable: true
+                                          display: Text
+                                      -
+                                        handle: button
+                                        field:
+                                          collapse: accordion
+                                          fullscreen: false
+                                          replicator_preview: false
+                                          button_label: 'Add button'
+                                          type: replicator
+                                          display: Button
+                                          actions: false
+                                          sets:
+                                            button:
+                                              display: Button
+                                              sets:
+                                                button:
+                                                  display: Button
+                                                  image: null
+                                                  fields:
+                                                    -
+                                                      handle: label
+                                                      field:
+                                                        input_type: text
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: Label
+                                                        width: 66
+                                                        replicator_preview: false
+                                                        instructions_position: above
+                                                        antlers: false
+                                                    -
+                                                      handle: show_controls
+                                                      field:
+                                                        mode: toggle
+                                                        display: 'Show controls'
+                                                        type: revealer
+                                                        replicator_preview: false
+                                                        icon: revealer
+                                                        width: 33
+                                                        listable: hidden
+                                                        instructions_position: above
+                                                    -
+                                                      handle: link_type
+                                                      field:
+                                                        options:
+                                                          entry: Entry
+                                                          url: URL
+                                                          email: Email
+                                                          tel: Tel
+                                                          sms: SMS
+                                                          asset: Asset
+                                                        type: button_group
+                                                        localizable: true
+                                                        default: entry
+                                                        listable: false
+                                                        display: 'Link type'
+                                                        replicator_preview: false
+                                                        width: 100
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                        instructions_position: above
+                                                        visibility: visible
+                                                        always_save: false
+                                                    -
+                                                      handle: entry
+                                                      field:
+                                                        max_items: 1
+                                                        mode: default
+                                                        type: entries
+                                                        localizable: true
+                                                        width: 100
+                                                        listable: false
+                                                        display: Entry
+                                                        replicator_preview: false
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,entry'
+                                                        if:
+                                                          link_type: entry
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: url
+                                                      field:
+                                                        placeholder: 'https://site.com'
+                                                        input_type: url
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: URL
+                                                        width: 100
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,url'
+                                                        if:
+                                                          link_type: url
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: email
+                                                      field:
+                                                        placeholder: info@site.com
+                                                        input_type: email
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: E-mail
+                                                        width: 100
+                                                        replicator_preview: false
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,email'
+                                                        if:
+                                                          link_type: email
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: tel
+                                                      field:
+                                                        placeholder: '+0 (0)12 345678'
+                                                        input_type: tel
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: Telephone
+                                                        width: 100
+                                                        replicator_preview: false
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,tel'
+                                                        if:
+                                                          link_type: tel
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: sms
+                                                      field:
+                                                        placeholder: '+0 (0)12 345678'
+                                                        input_type: tel
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: Telephone
+                                                        width: 100
+                                                        replicator_preview: false
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,sms'
+                                                        if:
+                                                          link_type: sms
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: asset
+                                                      field:
+                                                        container: files
+                                                        max_files: 1
+                                                        type: assets
+                                                        localizable: true
+                                                        display: Asset
+                                                        always_save: false
+                                                        width: 100
+                                                        validate:
+                                                          - 'required_if:{this}.link_type,asset'
+                                                        if:
+                                                          link_type: asset
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: button_type
+                                                      field:
+                                                        options:
+                                                          button: Button
+                                                          inline: Inline
+                                                        type: button_group
+                                                        localizable: true
+                                                        default: button
+                                                        listable: false
+                                                        display: 'Button type'
+                                                        replicator_preview: false
+                                                        width: 50
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: target_blank
+                                                      field:
+                                                        type: toggle
+                                                        localizable: true
+                                                        width: 50
+                                                        listable: false
+                                                        display: 'Open in new window'
+                                                        replicator_preview: false
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: attr_title
+                                                      field:
+                                                        placeholder: 'Learn more'
+                                                        input_type: text
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: Title
+                                                        width: 50
+                                                        replicator_preview: false
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: attr_aria
+                                                      field:
+                                                        placeholder: 'Download the PDF'
+                                                        input_type: text
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        display: 'Aria label'
+                                                        width: 50
+                                                        replicator_preview: false
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                    -
+                                                      handle: tracker_event
+                                                      field:
+                                                        input_type: text
+                                                        type: text
+                                                        localizable: true
+                                                        listable: false
+                                                        placeholder: my-custom-event
+                                                        display: 'Tracker event'
+                                                        instructions: 'Add the name of the event you want to be fired on click. These events only fire on a production environment. Allowed: `A-Z`, `a-z`, `0-9`, `-`, `_`.'
+                                                        validate:
+                                                          - 'regex:/[A-Za-z0-9_\-]+$/'
+                                                        instructions_position: below
+                                                        width: 50
+                                                        replicator_preview: false
+                                                        visibility: visible
+                                                        antlers: false
+                                                        hide_display: false
+                                                        if:
+                                                          show_controls: 'equals true'
+                                                          label: 'custom tracker_events'
+                                                    -
+                                                      handle: _visual_id
+                                                      field:
+                                                        type: auto_uuid
+                                                        visibility: hidden
+                                                        replicator_preview: false
+                                          max_sets: 1
+                                      -
+                                        handle: _visual_id
+                                        field:
+                                          type: auto_uuid
+                                          visibility: hidden
+                                          replicator_preview: false
+                        -
+                          handle: _visual_id
+                          field:
+                            type: auto_uuid
+                            visibility: hidden
+                            replicator_preview: false
   seo:
     display: SEO
     sections:
@@ -49,31 +861,160 @@ tabs:
         instructions: 'Basic SEO settings.'
         fields:
           -
-            import: 'statamic-peak-seo::seo_basic'
+            handle: seo_title
+            field:
+              type: text
+              localizable: true
+              display: 'Page title'
+              character_limit: 70
+              instructions: "This entry's title, defaults to title and site name."
+          -
+            handle: seo_description
+            field:
+              type: textarea
+              localizable: true
+              display: 'Meta description'
+              character_limit: '160'
+              instructions: "This entry's meta description. Max 160 characters."
       -
         display: Advanced
         instructions: 'Advanced SEO settings.'
         fields:
           -
-            import: 'statamic-peak-seo::seo_advanced'
+            handle: seo_noindex
+            field:
+              type: toggle
+              instructions: 'Instruct crawlers not to index this entry, also excludes it from the sitemap.xml.'
+              instructions_position: below
+              width: 50
+              display: No-index
+              localizable: true
+          -
+            handle: seo_nofollow
+            field:
+              type: toggle
+              instructions: 'Instruct crawlers not to follow links on this page.'
+              instructions_position: below
+              width: 50
+              display: No-follow
+              localizable: true
+          -
+            handle: seo_canonical_type
+            field:
+              options:
+                entry: 'Current entry'
+                current: 'Current domain'
+                external: 'External domain'
+              display: 'Canonical URL'
+              type: button_group
+              default: entry
+              instructions: 'Where should the canonical URL for this entry point to.'
+              localizable: true
+          -
+            handle: seo_canonical_current
+            field:
+              max_items: 1
+              type: entries
+              localizable: true
+              listable: false
+              display: 'Canonical URL'
+              width: 66
+              instructions: 'If this is an entry with duplicate content. Enter the original URL for this content.'
+              validate:
+                - 'required_if:seo_canonical_type,current'
+              if:
+                seo_canonical_type: 'equals current'
+          -
+            handle: seo_canonical_external
+            field:
+              input_type: url
+              display: 'Canonical URL'
+              type: text
+              listable: false
+              localizable: true
+              validate:
+                - 'required_if:seo_canonical_type,external'
+              if:
+                seo_canonical_type: 'equals external'
       -
         display: 'Open Graph'
         instructions: 'Open Graph meta tags for social sharing.'
         fields:
           -
-            import: 'statamic-peak-seo::seo_open_graph'
+            handle: og_title
+            field:
+              type: text
+              localizable: true
+              display: 'Social title'
+              instructions: "This entry's OG title, defaults to custom SEO title and title."
+          -
+            handle: og_description
+            field:
+              type: textarea
+              localizable: true
+              display: 'Social description'
+              instructions: "This entry's OG description, defaults to meta description."
+          -
+            handle: og_image
+            field:
+              container: social_images
+              max_files: 1
+              type: assets
+              localizable: true
+              display: 'Social image'
+              always_save: false
+              mode: grid
+              listable: true
+              instructions: "This entry's OG image. Defaults to global site OG image. The recommended size is 1200px x 630px. The image will be focal cropped to this dimension."
+              instructions_position: below
+              width: 50
+              show_set_alt: false
       -
         display: Sitemap
         instructions: 'Sitemap configuration.'
         fields:
           -
-            import: 'statamic-peak-seo::seo_sitemap'
+            handle: sitemap_change_frequency
+            field:
+              options:
+                always: Always
+                hourly: Hourly
+                daily: Daily
+                weekly: Weekly
+                monthly: Monthly
+                yearly: Yearly
+                never: Never
+              push_tags: false
+              type: select
+              instructions: 'How often to instruct search engines to crawl.'
+              instructions_position: below
+              width: 50
+              default: weekly
+              display: 'Change frequency'
+              localizable: true
+          -
+            handle: sitemap_priority
+            field:
+              type: text
+              display: Priority
+              default: 0.5
+              instructions: 'Valid values range from 0.0 to 1.0. This value does not affect how your pages are compared to pages on other sites, it only lets the search engines know which pages you deem most important for the crawlers.'
+              instructions_position: below
+              width: 50
+              localizable: true
       -
         display: 'JSON-ld Schema'
         instructions: 'Custom JSON-ld schema objects.'
         fields:
           -
-            import: 'statamic-peak-seo::seo_jsonld'
+            handle: schema_jsonld
+            field:
+              type: textarea
+              localizable: true
+              display: 'JSON-ld schema'
+              listable: false
+              instructions: 'Custom JSON-ld objects. You can use Antlers. The snippet will be wrapped in the appropriate script tag.'
+              antlers: true
   sidebar:
     display: Sidebar
     sections:
@@ -87,8 +1028,6 @@ tabs:
               localizable: true
               validate:
                 - required
-              generate: true
-              listable: hidden
               display: Slug
           -
             handle: page_info
@@ -108,3 +1047,28 @@ tabs:
                   field:
                     type: textarea
                     display: Notes
+          -
+            handle: links
+            field:
+              type: grid
+              display: Links
+              mode: stacked
+              fields:
+                -
+                  handle: label
+                  field:
+                    type: text
+                    display: Label
+                    input_type: text
+                -
+                  handle: link_url
+                  field:
+                    type: text
+                    display: URL
+                    input_type: url
+                -
+                  handle: _visual_id
+                  field:
+                    type: auto_uuid
+                    visibility: hidden
+                    replicator_preview: false
