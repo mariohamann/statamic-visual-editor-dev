@@ -8,5 +8,16 @@
     {{ page_builder scope="block" }}
         {{ partial src="page_builder/{type}" }}
     {{ /page_builder }}
+    {{ if links }}
+        <section class="fluid-grid">
+            <ul class="span-content flex flex-wrap gap-3">
+                {{ links }}
+                    <li {{ visual_edit }}>
+                        <a href="{{ link_url }}" class="inline-block px-4 py-2 border border-neutral/20 rounded hover:border-neutral/40 transition-colors">{{ label }}</a>
+                    </li>
+                {{ /links }}
+            </ul>
+        </section>
+    {{ /if }}
 </main>
 <!-- End: /default.antlers.html -->

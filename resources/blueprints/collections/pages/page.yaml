@@ -17,6 +17,25 @@ tabs:
               display: Title
               validate:
                 - required
+          -
+            handle: links
+            field:
+              type: grid
+              display: Links
+              mode: stacked
+              fields:
+                -
+                  handle: label
+                  field:
+                    type: text
+                    display: Label
+                    input_type: text
+                -
+                  handle: link_url
+                  field:
+                    type: text
+                    display: URL
+                    input_type: url
       -
         display: 'Page builder'
         fields:

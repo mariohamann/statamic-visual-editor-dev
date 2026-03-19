@@ -9,6 +9,17 @@ seo_nofollow: false
 seo_canonical_type: entry
 sitemap_change_frequency: weekly
 sitemap_priority: 0.5
+links:
+  -
+    id: sve-grid-row-1
+    label: 'Statamic Docs'
+    link_url: 'https://statamic.dev'
+    _visual_id: 11111111-1111-4111-8111-111111111111
+  -
+    id: sve-grid-row-2
+    label: 'Peak Starter Kit'
+    link_url: 'https://peak.1902.studio'
+    _visual_id: 22222222-2222-4222-8222-222222222222
 page_builder:
   -
     id: T5ZZwBfn
