@@ -413,39 +413,9 @@ Most of the folder structure will feel familiar to Laravel developers. However, 
 
 After making any changes to the addon (`addons/mariohamann/statamic-visual-editor/`), run the following steps in order:
 
-### 1. PHP formatting (if PHP files changed)
-```bash
-vendor/bin/pint addons/mariohamann/statamic-visual-editor/src addons/mariohamann/statamic-visual-editor/tests --format agent
-```
-
-### 2. Build addon JS assets (if JS files changed)
-```bash
-cd addons/mariohamann/statamic-visual-editor && npm run build
-```
-
-### 3. Publish built assets to `public/` (after every JS build)
-```bash
-php artisan vendor:publish --provider="MarioHamann\StatamicVisualEditor\ServiceProvider" --force
-```
-
-This copies `addons/mariohamann/statamic-visual-editor/resources/dist/build/` → `public/vendor/statamic-visual-editor/build/`, which is what the `InjectBridgeScript` middleware actually serves to the Live Preview iframe.
-
-### 4. PHP tests (if PHP files changed)
-```bash
-php artisan test --compact
-```
-
-### 5. E2E tests (if JS or PHP files changed)
-
-E2E tests require the live site to be running. Run from the workspace root:
-
-```bash
-npx playwright test
-```
-
-On first use, install the browser binaries once with:
-```bash
-npx playwright install chromium
-```
+1. `npm run compact.format`
+2. `npm run compact.build`
+3. `npm run compact.test:php`, if there are any PHP changes
+4. `npm run compact.test:e2e`, if there are any JS or interaction changes
 
 The test suite automatically resets `content/` from `tests/e2e/fixtures/content-snapshot/` and clears the Statamic stache before each run. Auth state is stored in `tests/e2e/.auth/user.json` (gitignored).
