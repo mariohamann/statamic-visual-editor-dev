@@ -39,6 +39,15 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - alpinejs (ALPINEJS) - v3
 - tailwindcss (TAILWINDCSS) - v4
 
+## Skills Activation
+
+This project has domain-specific skills available. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
+
+- `tailwindcss-development` — Styles applications using Tailwind CSS v4 utilities. Activates when adding styles, restyling components, working with gradients, spacing, layout, flex, grid, responsive design, dark mode, colors, typography, or borders; or when the user mentions CSS, styling, classes, Tailwind, restyle, hero section, cards, buttons, or any visual/UI changes.
+- `visual-editor-antlers` — Adds Visual Editor click-to-edit annotations to Antlers templates. Activates when adding visual_edit tags to Antlers views, implementing click-to-edit in Antlers partials, or when the user mentions visual_edit with Antlers, annotating Antlers templates, or live preview annotations in .antlers.html files.
+- `visual-editor-blade` — Adds Visual Editor click-to-edit annotations to Blade templates. Activates when adding visual_edit tags to Blade views, implementing click-to-edit in Blade partials or components, or when the user mentions visual_edit with Blade, annotating Blade templates, or live preview annotations in .blade.php files.
+- `visual-editor-research` — Audits a Statamic project to find where Visual Editor annotations should be added. Activates when setting up click-to-edit, auditing templates for visual_edit tags, planning Visual Editor integration, or when the user mentions visual editor setup, annotate templates, click-to-edit audit, or live preview annotations.
+
 ## Conventions
 
 - You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, and naming.
