@@ -2,14 +2,8 @@ name: Sync addon to standalone repository
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - "addons/mariohamann/statamic-visual-editor/**"
-      - ".github/workflows/sync-addon.yml"
     tags:
       - "v*"
-  workflow_dispatch:
 
 jobs:
   sync:
