@@ -2896,7 +2896,7 @@
             "dist": {
                 "type": "path",
                 "url": "addons/mariohamann/statamic-visual-editor",
-                "reference": "5efb11d517b33575d276199dbb68f92fc553a527"
+                "reference": "bfd3bd54ef0ab4e9f19d0902f45b619ddc7c29bf"
             },
             "require": {
                 "statamic/cms": "^6.0"
@@ -2912,18 +2912,21 @@
                 },
                 "laravel": {
                     "providers": [
-                        "Mariohamann\\StatamicVisualEditor\\ServiceProvider"
+                        "MarioHamann\\StatamicVisualEditor\\ServiceProvider"
                     ]
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Mariohamann\\StatamicVisualEditor\\": "src"
-                }
+                    "MarioHamann\\StatamicVisualEditor\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
             },
             "autoload-dev": {
                 "psr-4": {
-                    "Mariohamann\\StatamicVisualEditor\\Tests\\": "tests"
+                    "MarioHamann\\StatamicVisualEditor\\Tests\\": "tests"
                 }
             },
             "transport-options": {
