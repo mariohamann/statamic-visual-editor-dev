@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "format": "vendor/bin/pint . --format",
+    "format": "vendor/bin/pint .",
     "build": "cd addons/mariohamann/statamic-visual-editor && npm run build && cd ../../.. && php artisan vendor:publish --provider=\"MarioHamann\\StatamicVisualEditor\\ServiceProvider\" --force",
     "test": "npm run test:php && npm run test:e2e",
     "test:php": "cd addons/mariohamann/statamic-visual-editor && vendor/bin/phpunit --testdox",

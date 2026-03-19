@@ -14,7 +14,6 @@ Enable Storyblok-like click-to-edit functionality in Statamic 6's Live Preview. 
 - Always write tests for new features and bug fixes, and run them before finalizing.
 - Update `addons/mariohamann/statamic-visual-editor/README.md` whenever the addon's API or developer-facing behavior changes.
 
-
 <laravel-boost-guidelines>
 === foundation rules ===
 
@@ -39,12 +38,6 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - phpunit/phpunit (PHPUNIT) - v11
 - alpinejs (ALPINEJS) - v3
 - tailwindcss (TAILWINDCSS) - v4
-
-## Skills Activation
-
-This project has domain-specific skills available. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
-
-- `tailwindcss-development` — Styles applications using Tailwind CSS v4 utilities. Activates when adding styles, restyling components, working with gradients, spacing, layout, flex, grid, responsive design, dark mode, colors, typography, or borders; or when the user mentions CSS, styling, classes, Tailwind, restyle, hero section, cards, buttons, or any visual/UI changes.
 
 ## Conventions
 
@@ -287,6 +280,15 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - Always use existing Tailwind conventions; check project patterns before adding new ones.
 - IMPORTANT: Always use `search-docs` tool for version-specific Tailwind CSS documentation and updated code examples. Never rely on training data.
 - IMPORTANT: Activate `tailwindcss-development` every time you're working with a Tailwind CSS or styling-related task.
+
+=== mariohamann/statamic-visual-editor rules ===
+
+## Statamic Visual Editor
+
+Click-to-edit for Statamic's Live Preview. Authors click any annotated element in the preview iframe — the corresponding CP field expands, scrolls into view, and highlights. Zero production footprint; all annotations are stripped outside of Live Preview.
+
+- **Set targeting**: Links Replicator, Bard, and Grid items to their CP sets via a hidden `_visual_id` UUID field (auto-injected into blueprints). Use `{{ visual_edit }}` (Antlers) or `Statamic::tag('visual_edit')->context($set->all())->fetch()` (Blade) on the outermost element of each set partial.
+- **Field targeting**: Links any element to a specific CP field by handle. Use `{{ visual_edit field="handle" }}` (Antlers) or `Statamic::tag('visual_edit')->field('handle')->fetch()` (Blade). Supports dot notation for grouped fields (e.g., `page_info.author`).
 
 === statamic/cms rules ===
 

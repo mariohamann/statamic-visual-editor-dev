@@ -7,10 +7,14 @@
     "mcp": true,
     "nightwatch_mcp": false,
     "packages": [
-        "statamic/cms"
+        "statamic/cms",
+        "mariohamann/statamic-visual-editor"
     ],
     "sail": false,
     "skills": [
-        "tailwindcss-development"
+        "tailwindcss-development",
+        "visual-editor-antlers",
+        "visual-editor-blade",
+        "visual-editor-research"
     ]
 }
