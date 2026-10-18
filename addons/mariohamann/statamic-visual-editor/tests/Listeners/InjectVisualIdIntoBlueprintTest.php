@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use MarioHamann\StatamicVisualEditor\Tests\TestCase;
 use Statamic\Events\EntryBlueprintFound;
 use Statamic\Events\GlobalVariablesBlueprintFound;
+use Statamic\Facades\Blink;
 use Statamic\Facades\Fieldset;
 use Statamic\Fields\Blueprint;
 use Statamic\Fields\Fieldset as FieldsetModel;
@@ -473,6 +474,67 @@ class InjectVisualIdIntoBlueprintTest extends TestCase
         $textBlockFields = $sets['main']['sets']['text_block']['fields'] ?? [];
 
         $this->assertContains('_visual_id', array_column($textBlockFields, 'handle'));
+    }
+
+    private function contentBlocksFieldset(): FieldsetModel
+    {
+        return (new FieldsetModel)->setHandle('content_blocks')->setContents([
+            'title' => 'Content Blocks',
+            'fields' => [
+                $this->replicatorWithGroupedSets([
+                    'text_block' => $this->textSet('text_block'),
+                ]),
+            ],
+        ]);
+    }
+
+    public function test_imported_fieldsets_gain_visual_id_when_blueprint_fields_were_resolved_before_dispatch(): void
+    {
+        $fieldset = $this->contentBlocksFieldset();
+        Fieldset::shouldReceive('find')->with('content_blocks')->andReturn($fieldset);
+        $blueprint = $this->makeBlueprint([['import' => 'content_blocks']]);
+        // Statamic resolves fields before the event for a collection with a taxonomy (hasField() in
+        // Collection::ensureEntryBlueprintFields), which caches the import's fields for the request.
+        $blueprint->fields();
+
+        EntryBlueprintFound::dispatch($blueprint);
+
+        $sets = $blueprint->fields()->get('content')->config()['sets'] ?? [];
+        $this->assertContains('_visual_id', array_column($sets['main']['sets']['text_block']['fields'] ?? [], 'handle'));
+    }
+
+    public function test_dispatch_that_injects_nothing_keeps_statamics_imported_fields_cache(): void
+    {
+        $fieldset = $this->contentBlocksFieldset();
+        Fieldset::shouldReceive('find')->with('content_blocks')->andReturn($fieldset);
+        EntryBlueprintFound::dispatch($this->makeBlueprint([['import' => 'content_blocks']]));
+        Blink::put('blueprint-imported-fields-sentinel', 'kept');
+
+        EntryBlueprintFound::dispatch($this->makeBlueprint([['import' => 'content_blocks']]));
+
+        $this->assertSame('kept', Blink::get('blueprint-imported-fields-sentinel'));
+    }
+
+    public function test_importing_a_fieldset_without_sets_keeps_statamics_imported_fields_cache(): void
+    {
+        // Namespaced fieldsets (e.g. Peak SEO's) come back as a new instance from every find(), so their
+        // string field references are inlined again on every dispatch.
+        $common = (new FieldsetModel)->setHandle('common')->setContents([
+            'fields' => [['handle' => 'text_plain', 'field' => ['type' => 'textarea']]],
+        ]);
+        Fieldset::shouldReceive('find')->andReturnUsing(fn ($handle) => match ($handle) {
+            'common' => $common,
+            'seo::seo_basic' => (new FieldsetModel)->setHandle('seo::seo_basic')->setContents([
+                'fields' => [['handle' => 'seo_description', 'field' => 'common.text_plain']],
+            ]),
+            default => null,
+        });
+        EntryBlueprintFound::dispatch($this->makeBlueprint([['import' => 'seo::seo_basic']]));
+        Blink::put('blueprint-imported-fields-sentinel', 'kept');
+
+        EntryBlueprintFound::dispatch($this->makeBlueprint([['import' => 'seo::seo_basic']]));
+
+        $this->assertSame('kept', Blink::get('blueprint-imported-fields-sentinel'));
     }
 
     // -------------------------------------------------------------------------

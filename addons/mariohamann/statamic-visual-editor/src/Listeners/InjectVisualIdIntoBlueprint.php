@@ -5,6 +5,7 @@ namespace MarioHamann\StatamicVisualEditor\Listeners;
 use MarioHamann\StatamicVisualEditor\Traits\HandlesReplicatorSets;
 use Statamic\Events\EntryBlueprintFound;
 use Statamic\Events\GlobalVariablesBlueprintFound;
+use Statamic\Facades\Blink;
 use Statamic\Facades\Fieldset;
 
 class InjectVisualIdIntoBlueprint
@@ -13,6 +14,10 @@ class InjectVisualIdIntoBlueprint
 
     private array $processedFieldsetImports = [];
 
+    private int $injectedVisualIds = 0;
+
+    private bool $injectedIntoFieldset = false;
+
     public function handle(EntryBlueprintFound|GlobalVariablesBlueprintFound $event): void
     {
         if ($this->isBlueprintBuilderRequest()) {
@@ -20,9 +25,17 @@ class InjectVisualIdIntoBlueprint
         }
 
         $this->processedFieldsetImports = [];
+        $this->injectedIntoFieldset = false;
 
         $contents = $event->blueprint->contents();
         $contents = $this->processContents($contents);
+
+        // Statamic caches each import's resolved fields for the request, and may resolve them before this
+        // event (hasField() for a collection's taxonomy), so the cache can predate the injected fields.
+        if ($this->injectedIntoFieldset) {
+            Blink::flushStartingWith('blueprint-imported-fields-');
+        }
+
         $event->blueprint->setContents($contents);
     }
 
@@ -94,9 +107,15 @@ class InjectVisualIdIntoBlueprint
             return;
         }
 
+        $injectedBefore = $this->injectedVisualIds;
+
         $contents = $fieldset->contents();
         $contents['fields'] = $this->processFields($contents['fields'] ?? []);
         $fieldset->setContents($contents);
+
+        if ($this->injectedVisualIds > $injectedBefore) {
+            $this->injectedIntoFieldset = true;
+        }
     }
 
     private function resolveStringFieldRef(array $fieldDef): array
@@ -161,6 +180,7 @@ class InjectVisualIdIntoBlueprint
             'visibility' => 'hidden',
             'replicator_preview' => false,
         ]];
+        $this->injectedVisualIds++;
 
         return $fields;
     }
